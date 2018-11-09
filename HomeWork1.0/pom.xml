@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <name>HomeWork#1.0</name>
+    <name>HomeWork1.0</name>
     <description>Home work for lesson 1</description>
 
     <developers>
@@ -26,6 +26,8 @@
 
         <com.google.guava.version>23.0</com.google.guava.version>
 
+        <proguard.version>6.0.2</proguard.version>
+
     </properties>
 
     <dependencies>
@@ -34,6 +36,12 @@
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
             <version>${com.google.guava.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>net.sf.proguard</groupId>
+            <artifactId>proguard-base</artifactId>
+            <version>6.0.2</version>
         </dependency>
 
     </dependencies>
@@ -63,6 +71,34 @@
                     </execution>
                 </executions>
             </plugin>
+
+            <plugin>
+                <groupId>com.github.wvengen</groupId>
+                <artifactId>proguard-maven-plugin</artifactId>
+                <version>2.0.14</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals><goal>proguard</goal></goals>
+                    </execution>
+                </executions>
+
+                <configuration>
+                    <proguardVersion>6.0.2</proguardVersion>
+                    <obfuscate>true</obfuscate>
+                    <injar>${project.name}.jar</injar>
+                    <outjar>${project.name}-obfuscated.jar</outjar>
+                    <outputDirectory>${project.build.directory}</outputDirectory>
+                    <options>
+                        <option>-keep public class Main {public static void main(java.lang.String[]);}</option>
+                        <option>-dontwarn</option>
+                    </options>
+                    <libs>
+                        <lib>./proguard/java.base.jmod</lib>
+                    </libs>
+                </configuration>
+            </plugin>
+
 
         </plugins>
 
