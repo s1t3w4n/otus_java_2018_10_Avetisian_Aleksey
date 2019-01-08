@@ -19,6 +19,7 @@ public class MainHW3 {
             firstArray.set(i, (firstArray.size() - i) + "firstArray");
             System.out.println(firstArray.get(i));
         }
+        System.out.println("---------------------------------------");
         System.out.println("Collections.addAll");
         Collections.addAll(firstArray, "1st addAll Element", "2nd addAll Element", "3d addAll Element");
         for (String s: firstArray) {
@@ -31,6 +32,7 @@ public class MainHW3 {
             secondArray.set(i, i + "secondArray");
             System.out.println(secondArray.get(i));
         }
+        System.out.println("---------------------------------------");
         System.out.println("Collections.copy");
         Collections.copy(firstArray,secondArray);
         for (String s: firstArray) {
@@ -38,6 +40,7 @@ public class MainHW3 {
         }
 
         //Collections.sort
+        System.out.println("---------------------------------------");
         System.out.println("Collections.sort");
         Collections.sort(firstArray);
         for (String s: firstArray) {
