@@ -1,4 +1,4 @@
-### otus_java_2018_10_Avetisian_Aleksey
+### otus_java_2018_10
 home works in otus java developer course
 
 # Решение домаших заданий для курса "Разработчик Java" в OTUS
