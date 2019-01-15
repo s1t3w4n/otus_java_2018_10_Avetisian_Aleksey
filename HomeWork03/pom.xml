@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>ru.otus</groupId>
-    <artifactId>HomeWork3.0</artifactId>
+    <artifactId>HomeWork03</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
@@ -14,7 +14,7 @@
         <maven.compiler.target>8</maven.compiler.target>
     </properties>
 
-    <name>HomeWork3.0</name>
+    <name>HomeWork03</name>
     <build>
         <finalName>${project.name}</finalName>
         <plugins>
