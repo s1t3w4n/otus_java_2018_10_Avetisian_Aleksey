@@ -25,7 +25,7 @@ public class ATM {
         if (getBalance().compareTo(BigInteger.valueOf(sum)) < 0) {
             System.out.println("Sorry. Not enough money...");
         } else {
-            for (int i = cells.size() - 1; i > 1; i--) {
+            for (int i = cells.size() - 1; i > 0; i--) {
                 cells.get(i).setNext(cells.get(i - 1));
             }
             balance = cells.get(3).produce(balance,sum);
