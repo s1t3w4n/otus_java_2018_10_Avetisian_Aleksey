@@ -6,4 +6,8 @@ public class Ten implements Note {
     public int getValue() {
         return VALUE;
     }
+    @Override
+    public String toString() {
+        return "Ten:" + VALUE;
+    }
 }
