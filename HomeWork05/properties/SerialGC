@@ -1,0 +1,5 @@
+-Xms128m -Xmx128m -verbose:gc
+-Xloggc:./HomeWork05/log/SGC_log
+-XX:+HeapDumpOnOutOfMemoryError
+-XX:HeapDumpPath=./HomeWork05/dump/SGC_dump
+-XX:+UseSerialGC

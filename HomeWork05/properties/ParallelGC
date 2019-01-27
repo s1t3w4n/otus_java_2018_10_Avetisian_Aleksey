@@ -1,0 +1,5 @@
+-Xms128m -Xmx128m -verbose:gc
+-Xloggc:./HomeWork05/log/PGC_log
+-XX:+HeapDumpOnOutOfMemoryError
+-XX:HeapDumpPath=./HomeWork05/dump/PGC_dump
+-XX:+UseParallelGC

@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.function.Supplier;
 
 public class Stand {
 
@@ -7,7 +8,7 @@ public class Stand {
     private static Random random = new Random();
 
 
-    static <T> void factoryArrayList(Element<T> objectGetter)  {
+    static <T> void factoryArrayList(Supplier<T> objectGetter)  {
         long start = getMem();
         ArrayList array = new ArrayList();
         long ref = getMem();
@@ -28,7 +29,7 @@ public class Stand {
         System.out.println("Final ArrayList() size: " + (end - start));
     }
 
-    static <T> long factory(Element<T> objectGetter)  {
+    static <T> long factory(Supplier<T> objectGetter)  {
         Object[] array = new Object[LENGTH];
         long start = getMem();
 

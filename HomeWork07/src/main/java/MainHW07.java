@@ -17,7 +17,7 @@ public class MainHW07 {
 
         System.out.println("Balance: " + atm.getBalance()); // баланс после пополнения
         atm.takeMoney(20); // получить больше баланса
-        atm.takeMoney(13);
+        atm.takeMoney(6);
         System.out.println("Balance: " + atm.getBalance()); // баланс после снятия
 
 
