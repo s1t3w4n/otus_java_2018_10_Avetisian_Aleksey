@@ -3,7 +3,8 @@ package com.mydomain;
 import javax.management.*;
 import java.lang.management.ManagementFactory;
 /*TODO
-Сделать загрузку настроек VM из файла(папка properties)
+1. Сделать загрузку настроек VM из файла(папка properties)
+2. Сделать свой вывод лога в файл сразу с подсчётом статистики
  */
 public class MainHW05 {
     public static void main(String[] args) throws MalformedObjectNameException, NotCompliantMBeanException, InstanceAlreadyExistsException, MBeanRegistrationException, InterruptedException {
@@ -20,10 +21,11 @@ public class MainHW05 {
         MBeanServer mbs = ManagementFactory.getPlatformMBeanServer();
         ObjectName name = new ObjectName("com.anylink:type=com.mydomain.Benchmark");
 
-        Benchmark mbean = new Benchmark(10_000);
+        Benchmark mbean = new Benchmark(100_000);
         mbs.registerMBean(mbean, name);
-        //mbean.run(100_000);
-        mbean.run(10_000_000);//out of memory
+        //mbean.run(10_000);
+        mbean.run(100_000);
+        //mbean.run(10_000_000);//out of memory
 
         System.out.println("time: " + (System.currentTimeMillis() - beginTime)/1000);
     }
