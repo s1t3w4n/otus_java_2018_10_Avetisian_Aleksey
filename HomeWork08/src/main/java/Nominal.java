@@ -14,3 +14,4 @@ public enum Nominal {
         return this.value;
     }
 }
+

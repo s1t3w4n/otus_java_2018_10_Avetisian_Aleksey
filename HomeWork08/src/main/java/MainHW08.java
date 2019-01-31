@@ -1,5 +1,3 @@
-import java.util.Random;
-
 public class MainHW08 {
     public static void main(String[] args) {
         //Разные варианты создание АТМ в департаменте
@@ -36,15 +34,9 @@ public class MainHW08 {
         department.restore();// восстановить состояние департамента
         System.out.println(department.rest() + " Department Balance");//узнать остаток в департаменте
 
-        for (int i = 0; i < 10000; i++) {
-            fillDepartment(department, new Note(Nominal.ONE));
-        }
-        System.out.println(department.rest() + " Department Balance");//узнать остаток в департаменте
-
-        department.restore();// восстановить состояние департамента
-        System.out.println(department.rest() + " Department Balance");//узнать остаток в департаменте
 
     }
+
 
     private static void fillDepartment(Department department, Note note) {
         for (ATM atm :
