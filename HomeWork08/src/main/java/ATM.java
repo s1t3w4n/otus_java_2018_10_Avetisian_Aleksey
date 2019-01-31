@@ -9,7 +9,6 @@ import org.slf4j.LoggerFactory;
 
 public class ATM {
     private SortedSet<Cell> cells;
-    private ATM next; // chain просто чтоб был этот шаблон, задачи, которые он решал в прошлом д.з. решил SortedSet.
     private static int count;
     private final int ID = ++count;
     private static Logger logger = LoggerFactory.getLogger(ATM.class);
