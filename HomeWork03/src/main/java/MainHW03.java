@@ -11,7 +11,7 @@ public class MainHW03 {
         System.out.println(testArray.size() + " Element");// checking size
         testArray.add(99);// 2-nd
         System.out.println(testArray.get(1));
-        testArray.add(null);// 2-nd
+        testArray.add(null);// null
         System.out.println(testArray.get(2));
         System.out.println(testArray.size() + " Elements");
 
