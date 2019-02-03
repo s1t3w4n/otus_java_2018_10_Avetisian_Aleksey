@@ -1,7 +1,7 @@
 import java.util.Collections;
 import java.util.List;
 
-public class MainHW3 {
+public class MainHW03 {
     public static void main(String[] args) {
         List<Integer> testArray = new MyArrayList<>();
         //testing (size, add, get) methods of my array
@@ -11,6 +11,8 @@ public class MainHW3 {
         System.out.println(testArray.size() + " Element");// checking size
         testArray.add(99);// 2-nd
         System.out.println(testArray.get(1));
+        testArray.add(null);// null
+        System.out.println(testArray.get(2));
         System.out.println(testArray.size() + " Elements");
 
         //Collections.addAll
@@ -19,6 +21,7 @@ public class MainHW3 {
             firstArray.set(i, (firstArray.size() - i) + "firstArray");
             System.out.println(firstArray.get(i));
         }
+
         System.out.println("---------------------------------------");
         System.out.println("Collections.addAll");
         Collections.addAll(firstArray, "1st addAll Element", "2nd addAll Element", "3d addAll Element");
@@ -42,7 +45,7 @@ public class MainHW3 {
         //Collections.sort
         System.out.println("---------------------------------------");
         System.out.println("Collections.sort");
-        Collections.sort(firstArray);
+            Collections.sort(firstArray);
         for (String s: firstArray) {
             System.out.println(s);
         }

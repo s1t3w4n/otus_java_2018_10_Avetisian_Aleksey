@@ -1,11 +1,11 @@
 public class Note {
     private final Nominal nominal;
 
-    public Note(Nominal nominal) {
+    Note(Nominal nominal) {
         this.nominal = nominal;
     }
 
-    public Nominal getNominal() {
+    Nominal getNominal() {
         return nominal;
     }
 }

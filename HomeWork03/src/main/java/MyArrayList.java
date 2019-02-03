@@ -1,15 +1,11 @@
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
+import java.util.*;
 
 public class MyArrayList<T> implements List<T> {
 
-    //UnsupportedOperationException new UnsupportedOperationException("Unsupported method") = new UnsupportedOperationException("Unsupported method");
     private Object[] myElements;
     private static final int DEFAULT_CAPACITY = 10;
     private static final Object[] EMPTY_ELEMENTDATA = {};
-    private int size;
+    private int size = 0;
 
     public MyArrayList() {
         this.myElements = EMPTY_ELEMENTDATA;
@@ -19,7 +15,7 @@ public class MyArrayList<T> implements List<T> {
         if (size <= 0) {
             throw new IllegalArgumentException("Capacity have to be positive value");
         }
-        this.myElements = new Object[size + 1];
+        this.myElements = new Object[size];
         this.size = size;
     }
 
@@ -45,10 +41,7 @@ public class MyArrayList<T> implements List<T> {
 
     @Override
     public Object[] toArray() {
-        Object[] toArray = new Object[size - 1];
-        for (int i = 0; i < size - 1; i++) {
-            toArray[i] = myElements[i + 1];
-        }
+        Object[] toArray = Arrays.copyOf(myElements, size);
         return toArray;
     }
 
@@ -59,17 +52,12 @@ public class MyArrayList<T> implements List<T> {
 
     @Override
     public boolean add(T t) {
-        if (myElements.length <= size + 1) {
-            Object[] newMyElements = new Object[myElements.length + DEFAULT_CAPACITY];
-            for (int i = 0; i < myElements.length; i++) {
-                newMyElements[i] = myElements[i];
-            }
+        if (myElements.length <= size) {
+            Object[] newMyElements = Arrays.copyOf(myElements,myElements.length + DEFAULT_CAPACITY);
             myElements = newMyElements;
         }
-        if (t != null) {
-                size++;
-                myElements[size] = t;
-        }
+        size++;
+        myElements[size - 1] = t;
         return true;
     }
 
@@ -110,16 +98,19 @@ public class MyArrayList<T> implements List<T> {
 
     @Override
     public T get(int index) {
-        if (index < 0) {
+        if (index < 0 || index >= size ) {
             throw new IllegalArgumentException("");
         }
-        return (T) myElements[index + 1];
+        return (T) myElements[index];
     }
 
     @Override
     public T set(int index, T element) {
-        myElements[index + 1] = element;
-        return (T) myElements[index + 1];
+        if (index < 0 || index >= size ) {
+            throw new IllegalArgumentException("");
+        }
+            myElements[index] = element;
+            return (T) myElements[index];
     }
 
     @Override
@@ -158,7 +149,7 @@ public class MyArrayList<T> implements List<T> {
     }
 
     public class MyIterator implements ListIterator {
-        private int index = 0;
+        private int index = -1;
         private Object[] objects;
 
         public MyIterator(Object[] objects) {
@@ -167,7 +158,7 @@ public class MyArrayList<T> implements List<T> {
 
         @Override
         public boolean hasNext() {
-            return (index != size);
+            return (index != size - 1);
         }
 
         @Override
@@ -220,7 +211,7 @@ public class MyArrayList<T> implements List<T> {
 
         @Override
         public void set(Object o) {
-            if (index != 0) {
+            if (index != -1 ) {
                 myElements[index] = o;
             }
         }
