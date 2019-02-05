@@ -10,10 +10,12 @@ public class MainHW06 {
                 (key, value, action) -> System.out.println("key:" + key + ", value:" + value + ", action:" + action);
         cache.addListener(listener);
         cache.put(1,1);
-        //System.out.println(cache.get(1));
+        cache.put(2,2);
+        System.out.println(cache.get(1));
+        System.out.println(cache.get(2));
         System.out.println(cache.get(0));
         cache.remove(1);
+        System.out.println(cache.get(1));
         cache.removeListener(listener);
-
     }
 }
