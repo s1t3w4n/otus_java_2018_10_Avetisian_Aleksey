@@ -1,5 +1,6 @@
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.IntStream;
 
 public class MainHW03 {
     public static void main(String[] args) {
@@ -17,37 +18,30 @@ public class MainHW03 {
 
         //Collections.addAll
         List<String> firstArray = new MyArrayList<>(100); // creating first array
-        for (int i = 0; i < firstArray.size(); i++) { // filling 1st array
-            firstArray.set(i, (firstArray.size() - i) + "firstArray");
-            System.out.println(firstArray.get(i));
-        }
+        IntStream.range(0, firstArray.size()).forEach(i -> firstArray.set(i, (firstArray.size() - i) + "firstArray"));
+        System.out.println(String.join("\n", firstArray));
 
         System.out.println("---------------------------------------");
         System.out.println("Collections.addAll");
         Collections.addAll(firstArray, "1st addAll Element", "2nd addAll Element", "3d addAll Element");
-        for (String s: firstArray) {
-            System.out.println(s);
-        }
+        System.out.println(String.join("\n", firstArray));
 
         //Collections.copy
         List<String> secondArray = new MyArrayList<>(50);// creating 2nd array
-        for (int i = 0; i < secondArray.size(); i++) { // filling 2nd array
-            secondArray.set(i, i + "secondArray");
-            System.out.println(secondArray.get(i));
-        }
+//        for (int i = 0; i < secondArray.size(); i++) { // filling 2nd array
+//            secondArray.set(i, i + "secondArray");
+//            System.out.println(secondArray.get(i));
+//        }
+        IntStream.range(0, secondArray.size()).forEach(i -> secondArray.set(i, (secondArray.size() - i) + "secondArray"));
+        System.out.println(String.join("\n", secondArray));
         System.out.println("---------------------------------------");
         System.out.println("Collections.copy");
         Collections.copy(firstArray,secondArray);
-        for (String s: firstArray) {
-            System.out.println(s);
-        }
-
+        System.out.println(String.join("\n", firstArray));
         //Collections.sort
         System.out.println("---------------------------------------");
         System.out.println("Collections.sort");
             Collections.sort(firstArray);
-        for (String s: firstArray) {
-            System.out.println(s);
-        }
+        System.out.println(String.join("\n", firstArray));
     }
 }

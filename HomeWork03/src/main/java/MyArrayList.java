@@ -12,11 +12,15 @@ public class MyArrayList<T> implements List<T> {
     }
 
     public MyArrayList(int size) {
-        if (size <= 0) {
-            throw new IllegalArgumentException("Capacity have to be positive value");
+        if (size > 0) {
+            this.myElements = new Object[size];
+            this.size = size;
+        } else if (size == 0) {
+            this.myElements = EMPTY_ELEMENTDATA;
+        } else {
+            throw new IllegalArgumentException("Illegal Capacity: "+
+                    size);
         }
-        this.myElements = new Object[size];
-        this.size = size;
     }
 
     @Override
@@ -53,7 +57,7 @@ public class MyArrayList<T> implements List<T> {
     @Override
     public boolean add(T t) {
         if (myElements.length <= size) {
-            Object[] newMyElements = Arrays.copyOf(myElements,myElements.length + DEFAULT_CAPACITY);
+            Object[] newMyElements = Arrays.copyOf(myElements, myElements.length + DEFAULT_CAPACITY);
             myElements = newMyElements;
         }
         size++;
@@ -98,7 +102,7 @@ public class MyArrayList<T> implements List<T> {
 
     @Override
     public T get(int index) {
-        if (index < 0 || index >= size ) {
+        if (index < 0 || index >= size) {
             throw new IllegalArgumentException("");
         }
         return (T) myElements[index];
@@ -106,11 +110,11 @@ public class MyArrayList<T> implements List<T> {
 
     @Override
     public T set(int index, T element) {
-        if (index < 0 || index >= size ) {
+        if (index < 0 || index >= size) {
             throw new IllegalArgumentException("");
         }
-            myElements[index] = element;
-            return (T) myElements[index];
+        myElements[index] = element;
+        return (T) myElements[index];
     }
 
     @Override
@@ -211,7 +215,7 @@ public class MyArrayList<T> implements List<T> {
 
         @Override
         public void set(Object o) {
-            if (index != -1 ) {
+            if (index != -1) {
                 myElements[index] = o;
             }
         }
