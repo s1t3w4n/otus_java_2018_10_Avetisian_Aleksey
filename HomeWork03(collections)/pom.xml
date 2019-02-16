@@ -14,7 +14,7 @@
         <maven.compiler.target>8</maven.compiler.target>
     </properties>
 
-    <name>HomeWork03</name>
+    <name>HomeWork03(collections)</name>
     <build>
         <finalName>${project.name}</finalName>
         <plugins>
