@@ -2,11 +2,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.json.*;
+import java.io.StringWriter;
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.Collection;
 import java.util.Map;
+
+import static java.util.Objects.*;
 
 
 public class MyJson {
@@ -16,8 +19,7 @@ public class MyJson {
     public String toJson(Object o) {
         try {
             JsonObject jsonObject = objectToJson(o);
-            return jsonObject.toString();
-
+            return writeToString(jsonObject);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -41,7 +43,9 @@ public class MyJson {
     }
 
     private JsonValue elementToJson(Object element, Class<?> type) throws Exception {
-        if (type.isPrimitive()) {
+        if(!nonNull(element)){
+            return JsonValue.NULL;
+        } else if (type.isPrimitive()) {
             return simpleObjectToJson(element);
         } else if (type.isArray()) {
             return arrayToJson(element);
@@ -80,7 +84,9 @@ public class MyJson {
     }
 
     private JsonValue simpleObjectToJson(Object object) {
-        if (object instanceof Number) {
+        if (object == null) {
+            return JsonValue.NULL;
+        } else if (object instanceof Number) {
             Number number = (Number) object;
             if (number instanceof Float || number instanceof Double) {
                 return Json.createValue(number.doubleValue());
@@ -93,9 +99,18 @@ public class MyJson {
             if (object.equals(true)) {
                 return JsonValue.TRUE;
             } else {
-                return JsonValue.FALSE;}
+                return JsonValue.FALSE;
+            }
         } else {
             return Json.createValue(object.toString());
         }
+    }
+    private static String writeToString(JsonObject jsonst) {
+        StringWriter stWriter = new StringWriter();
+        try (JsonWriter jsonWriter = Json.createWriter(stWriter)) {
+            jsonWriter.writeObject(jsonst);
+        }
+
+        return stWriter.toString();
     }
 }
