@@ -18,14 +18,27 @@ public class MyJson {
 
     public String toJson(Object o) {
         try {
-            JsonObject jsonObject = objectToJson(o);
-            return writeToString(jsonObject);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+            if (isNull(o)) {
+                return JsonValue.NULL.toString();
+            }
+            Class clazz = o.getClass();
+            if (clazz.isArray()) {
+                return arrayToJson(o).toString();
+            } else if (Collection.class.isAssignableFrom(clazz)) {
+                if(((Collection)o).size() == 1) {
+                    return arrayToJson(((Collection) o).toArray()).toString();
+                }
+            } else {
+                JsonObject jsonObject = objectToJson(o);
+                return writeToString(jsonObject);
+            }
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
         }
+        return null;
     }
 
-    private JsonObject objectToJson(Object object) throws Exception {
+    private JsonObject objectToJson(Object object) throws IllegalAccessException {
         JsonObjectBuilder objectBuilder = Json.createObjectBuilder();
 
         Field[] fields = object.getClass().getDeclaredFields();
@@ -42,8 +55,8 @@ public class MyJson {
         return objectBuilder.build();
     }
 
-    private JsonValue elementToJson(Object element, Class<?> type) throws Exception {
-        if(!nonNull(element)){
+    private JsonValue elementToJson(Object element, Class<?> type) {
+        if (!nonNull(element)) {
             return JsonValue.NULL;
         } else if (type.isPrimitive()) {
             return simpleObjectToJson(element);
@@ -59,7 +72,7 @@ public class MyJson {
         }
     }
 
-    private JsonValue mapToJson(Object object) throws Exception {
+    private JsonValue mapToJson(Object object) {
         JsonObjectBuilder objectBuilder = Json.createObjectBuilder();
 
         Map<?, ?> map = (Map<?, ?>) object;
@@ -71,7 +84,7 @@ public class MyJson {
         return objectBuilder.build();
     }
 
-    private JsonValue arrayToJson(Object object) throws Exception {
+    private JsonValue arrayToJson(Object object) {
         JsonArrayBuilder arrayBuilder = Json.createArrayBuilder();
 
         int length = Array.getLength(object);
@@ -105,6 +118,7 @@ public class MyJson {
             return Json.createValue(object.toString());
         }
     }
+
     private static String writeToString(JsonObject jsonst) {
         StringWriter stWriter = new StringWriter();
         try (JsonWriter jsonWriter = Json.createWriter(stWriter)) {

@@ -5,7 +5,7 @@ import java.util.Random;
 public class Arrays {
     int[] ints;
     String[][] strings;
-    // Primitives[] primitives;// to fix - make a loop
+    //Primitives[] primitives;// to fix - make a loop
 
     public Arrays() {
         ints = generateInts();
