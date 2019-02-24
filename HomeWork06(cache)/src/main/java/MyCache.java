@@ -4,15 +4,29 @@ import java.lang.ref.SoftReference;
 public class MyCache<K, V> implements HwCache<K, V> {
 
     private Map<K, SoftReference<V>> data = new HashMap<>();
-    private HwListener listener;
+    private List<HwListener<K, V>> listeners = new ArrayList<>();
 
     public void put(K key, V value) {
-        listener.notify(key, value, "put" );
-        data.put(key,new SoftReference<>(value));
+        for (HwListener listener : listeners) {
+            //prevent unexpected stop
+            try {
+                listener.notify(key, value, "put");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        data.put(key, new SoftReference<>(value));
     }
 
     public void remove(K key) {
-        listener.notify(key, data.get(key).get(), "remove" );
+        for (HwListener listener : listeners) {
+            //prevent unexpected stop
+            try {
+                listener.notify(key, data.get(key).get(), "remove");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
         data.remove(key);
     }
 
@@ -22,10 +36,10 @@ public class MyCache<K, V> implements HwCache<K, V> {
     }
 
     public void addListener(HwListener listener) {
-        this.listener = listener;
+        listeners.add(listener);
     }
 
     public void removeListener(HwListener listener) {
-        listener = null;
+        listeners.remove(listener);
     }
 }
