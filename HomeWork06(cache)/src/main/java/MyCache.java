@@ -6,33 +6,31 @@ public class MyCache<K, V> implements HwCache<K, V> {
     private Map<K, SoftReference<V>> data = new HashMap<>();
     private List<HwListener<K, V>> listeners = new ArrayList<>();
 
-    public void put(K key, V value) {
+    private void callListeners(K key, V value, String action) {
         for (HwListener listener : listeners) {
-            //prevent unexpected stop
             try {
-                listener.notify(key, value, "put");
+                listener.notify(key, value, action);
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
+    }
+
+    public void put(K key, V value) {
+        callListeners(key, value, "put");
         data.put(key, new SoftReference<>(value));
     }
 
     public void remove(K key) {
-        for (HwListener listener : listeners) {
-            //prevent unexpected stop
-            try {
-                listener.notify(key, data.get(key).get(), "remove");
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
+        callListeners(key,data.get(key).get(), "remove");
         data.remove(key);
     }
 
     public V get(K key) {
         Optional<SoftReference<V>> optional = Optional.ofNullable(data.get(key));
-        return optional.map(SoftReference::get).orElse(null);
+        V value = optional.map(SoftReference::get).orElse(null);
+        callListeners(key, value, "get");
+        return value;
     }
 
     public void addListener(HwListener listener) {
