@@ -18,7 +18,7 @@ public class MainHW03 {
 
         //Collections.addAll
         List<String> firstArray = new MyArrayList<>(100); // creating first array
-        IntStream.range(0, firstArray.size()).forEach(i -> firstArray.set(i, (firstArray.size() - i) + "firstArray"));
+        IntStream.range(0, 99).forEach(i -> firstArray.add((99 - firstArray.size()) + "firstArray"));
         System.out.println(String.join("\n", firstArray));
 
         System.out.println("---------------------------------------");
@@ -32,7 +32,7 @@ public class MainHW03 {
 //            secondArray.set(i, i + "secondArray");
 //            System.out.println(secondArray.get(i));
 //        }
-        IntStream.range(0, secondArray.size()).forEach(i -> secondArray.set(i, (secondArray.size() - i) + "secondArray"));
+        IntStream.range(0, 99).forEach(element -> secondArray.add((99 - secondArray.size()) + "secondArray"));
         System.out.println(String.join("\n", secondArray));
         System.out.println("---------------------------------------");
         System.out.println("Collections.copy");

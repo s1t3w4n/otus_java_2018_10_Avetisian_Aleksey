@@ -11,15 +11,14 @@ public class MyArrayList<T> implements List<T> {
         this.myElements = EMPTY_ELEMENTDATA;
     }
 
-    public MyArrayList(int size) {
-        if (size > 0) {
-            this.myElements = new Object[size];
-            this.size = size;
-        } else if (size == 0) {
+    public MyArrayList(int capacity) {
+        if (capacity > 0) {
+            this.myElements = new Object[capacity];
+        } else if (capacity == 0) {
             this.myElements = EMPTY_ELEMENTDATA;
         } else {
             throw new IllegalArgumentException("Illegal Capacity: "+
-                    size);
+                    capacity);
         }
     }
 
