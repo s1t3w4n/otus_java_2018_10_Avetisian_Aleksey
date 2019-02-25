@@ -22,8 +22,12 @@ public class MyCache<K, V> implements HwCache<K, V> {
     }
 
     public void remove(K key) {
-        callListeners(key,data.get(key).get(), "remove");
-        data.remove(key);
+        try {
+            callListeners(key, data.get(key).get(), "remove");
+            data.remove(key);
+        } catch (NullPointerException e){
+            System.out.println("No such element");
+        }
     }
 
     public V get(K key) {

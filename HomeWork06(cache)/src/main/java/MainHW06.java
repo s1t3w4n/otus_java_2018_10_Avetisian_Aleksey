@@ -15,6 +15,7 @@ public class MainHW06 {
         System.out.println(cache.get(2));
         System.out.println(cache.get(0));
         cache.remove(1);
+        cache.remove(100);
         System.out.println(cache.get(1));
         cache.removeListener(listener);
     }
