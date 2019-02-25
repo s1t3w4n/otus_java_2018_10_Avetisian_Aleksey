@@ -22,12 +22,9 @@ public class MyCache<K, V> implements HwCache<K, V> {
     }
 
     public void remove(K key) {
-        try {
-            callListeners(key, data.get(key).get(), "remove");
-            data.remove(key);
-        } catch (NullPointerException e){
-            System.out.println("No such element");
-        }
+        Optional<SoftReference<V>> optional = Optional.ofNullable(data.remove(key));
+        callListeners(key, optional.map(SoftReference::get).orElse(null), "remove");
+
     }
 
     public V get(K key) {
