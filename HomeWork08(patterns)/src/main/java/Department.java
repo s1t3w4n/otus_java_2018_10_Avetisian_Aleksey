@@ -5,31 +5,34 @@ import java.util.List;
 
 public class Department {
     private List<ATM> atms;
+
     public Department(ATM... atms) {
         this.atms = new ArrayList<>();
         this.atms.addAll(Arrays.asList(atms));
     }
 
     public void save() {
-        for (ATM atm :
-                atms) {
-            atm.fullStateSave();
-        }
+        List<Command> commands = new ArrayList<>();
+        atms.forEach(atm -> commands.add(new SaveState(atm)));
+
+        commands.forEach(command -> command.execute());
     }
 
     public void restore() {
-        for (ATM atm :
-                atms) {
-            atm.fullStateRestore();
-        }
+        List<Command> commands = new ArrayList<>();
+        atms.forEach(atm -> commands.add(new RestoreState(atm)));
+
+        commands.forEach(command -> command.execute());
     }
 
 
     public BigInteger rest() {
+        List<Command> commands = new ArrayList<>();
+        atms.forEach(atm -> commands.add(new GetBalance(atm)));
+
         BigInteger rest = BigInteger.valueOf(0);
-        for (ATM atm :
-                atms) {
-            rest = rest.add(atm.balance());
+        for (Command command : commands) {
+            rest = rest.add(command.execute());
         }
         return rest;
     }
