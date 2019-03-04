@@ -9,12 +9,13 @@ import org.slf4j.LoggerFactory;
 
 public class ATM {
     private List<Cell> cells;
-    private static int count;
-    private final int ID = ++count;
+    private static int count = 1;
+    private final int ID;
     private static Logger logger = LoggerFactory.getLogger(ATM.class);
 
     ATM(Nominal... nominals) {
         cells = new ArrayList<>();
+        ID = generateID();
         for (Nominal nominal : nominals) {
             cells.add(new Cell(nominal));
         }
@@ -25,6 +26,10 @@ public class ATM {
         }
 
         logger.info(this + " successful configured");
+    }
+
+    private int generateID() {
+        return count++;
     }
 
 
