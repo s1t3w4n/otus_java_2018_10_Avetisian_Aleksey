@@ -20,10 +20,12 @@ public class MainHW10 {
     public static void main(String[] args) throws SQLException {
         DataSource dataSource = new DataSourceH2();
         new Table().createTable(dataSource);
-        User user = new User(999, "Jack", 12);
+        User user = new User(new Long(999), "Jack", new Integer(12));
         traverse(user, new UserService());
         DBServiceUser dbServiceUser = new DBServiceUserImpl(dataSource);
         dbServiceUser.save(user);
+        User user1 = (User) dbServiceUser.load(user.getID(), user.getClass());
+        System.out.println(user1.toString());
     }
 
     private static void traverse(Object object, Service service) {

@@ -1,16 +1,44 @@
-package executor.reflection;
+package dbservise.reflection;
 
 import entitys.annotations.ID;
+import executor.Executor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
-public class MyReflection {
-    private static Logger logger = LoggerFactory.getLogger(MyReflection.class);
+public class ReflectionHelper {
+
+    private static Logger logger = LoggerFactory.getLogger(ReflectionHelper.class);
+
+    public static <T> T instantiate(Class<T> type, Object... args) {
+        try {
+            if (Objects.isNull(args) || args.length == 0) {
+                logger.info("Empty " + type.getSimpleName() + " created");
+                return type.getDeclaredConstructor().newInstance();
+            } else {
+                Class<?>[] classes = /*new Class<?>[]{long.class, String.class, int.class}*/toClasses(args);
+                logger.info("Filled " + type.getSimpleName() + " created");
+                return type.getDeclaredConstructor(classes).newInstance(args);
+            }
+        } catch (InstantiationException | IllegalAccessException | NoSuchMethodException
+                | InvocationTargetException e) {
+            logger.info("Executor:" + e);
+        }
+
+        return null;
+    }
+
+    private static Class<?>[] toClasses(Object[] args) {
+        logger.info("Array of fields created");
+        return Arrays.stream(args).map(Object::getClass).toArray(Class<?>[]::new);
+    }
 
     public static List<String> getFildsNames(Object objectData) {
         List<String> names = new ArrayList<>();

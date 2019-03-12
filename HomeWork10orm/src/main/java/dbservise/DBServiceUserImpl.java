@@ -2,7 +2,7 @@ package dbservise;
 
 import executor.Executor;
 import executor.ExecutorImpl;
-import executor.reflection.MyReflection;
+import dbservise.reflection.ReflectionHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,31 +36,39 @@ public class DBServiceUserImpl<T> implements DBServiceUser<T> {
 
     @Override
     public <T> T load(long id, Class<T> clazz) {
-        /*try (Connection connection = dataSource.getConnection()) {
+        try (Connection connection = dataSource.getConnection()) {
             Executor<T> executor = new ExecutorImpl<>(connection);
             String sql = String.format
                     ("select * from %s where %s = ?",
                             clazz.getSimpleName(),
-                            MyReflection.findAnnotatedField(clazz).getName());
+                            ReflectionHelper.findAnnotatedField(clazz).getName());
 
             Optional<T> object = executor.selectRecord(sql, id, resultSet -> {
                 try {
-                    List<Object> fields = new ArrayList<>();
-                    while (resultSet.next()) {
-
-                        fields.add(resultSet.getObject(1));
+                    Object[] fields = new Object[clazz.getDeclaredFields().length];
+                    if (resultSet.next()) {
+                        for (int i = 0; i < fields.length; i++) {
+                            fields[i] = resultSet.getObject(i + 1);
+                        }
+                        return (T) ReflectionHelper.instantiate(clazz, fields);
                     }
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
-            })
-
+                return null;
+            });
+            if (object.isPresent()) {
+                logger.info(object.get().toString());
+                return object.get();
+            } else {
+                return null;
+            }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.info("Exception" + e);
+            throw new RuntimeException(e);
         }
-        */
-        return null;
     }
+
 
     private void insert(T objectData) {
         try (Connection connection = dataSource.getConnection()) {
@@ -71,7 +79,7 @@ public class DBServiceUserImpl<T> implements DBServiceUser<T> {
 
             logger.info("sql insert is: \"" + sql + "\"");
 
-            executor.insertRecord(sql, MyReflection.getFieldsValues(objectData));
+            executor.insertRecord(sql, ReflectionHelper.getFieldsValues(objectData));
             connection.commit();
             logger.info("New user committed.");
         } catch (SQLException e) {
@@ -82,9 +90,9 @@ public class DBServiceUserImpl<T> implements DBServiceUser<T> {
     private String insertSQL(T objectData) {
 
         StringBuilder sql = new StringBuilder("insert into ");
-        sql.append(MyReflection.getTableName(objectData));
+        sql.append(ReflectionHelper.getTableName(objectData));
         sql.append(" (");
-        List<String> names = MyReflection.getFildsNames(objectData);
+        List<String> names = ReflectionHelper.getFildsNames(objectData);
         for (int i = 0; i < names.size(); i++) {
             sql.append(names.get(i));
             if (i == names.size() - 1) {
@@ -107,12 +115,14 @@ public class DBServiceUserImpl<T> implements DBServiceUser<T> {
     }
 
     private void update(T objectData) {
+
+
         logger.info("User updated committed.");
     }
 
     private boolean checkExistenceInDB(T objectData) {
         try {
-            long id = MyReflection.findAnnotatedField(objectData.getClass()).getLong(objectData);
+            long id = ReflectionHelper.findAnnotatedField(objectData.getClass()).getLong(objectData);
             try (Connection connection = dataSource.getConnection()) {
                 Executor<Boolean> executor = new ExecutorImpl<>(connection);
                 Optional<Boolean> isIn = executor.selectRecord("select id from user where id = ?", id, resultSet -> {
@@ -123,11 +133,11 @@ public class DBServiceUserImpl<T> implements DBServiceUser<T> {
                         e.printStackTrace();
                     }
                     if (existence) {
-                            logger.info("Object is exist in data base");
-                        } else {
-                            logger.info("Object isn't exist in data base");
-                        }
-                        return existence;
+                        logger.info("Object is exist in data base");
+                    } else {
+                        logger.info("Object isn't exist in data base");
+                    }
+                    return existence;
                 });
                 return isIn.get();
             } catch (SQLException e) {

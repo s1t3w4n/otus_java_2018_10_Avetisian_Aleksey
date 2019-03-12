@@ -10,7 +10,7 @@ public class User {
     private final long ID;
     private final String name;
     private final int age;
-    private static Logger logger = LoggerFactory.getLogger(DBServiceUser.class);
+    //private static Logger logger = LoggerFactory.getLogger(DBServiceUser.class);
 
     public User(long ID, String name, int age) {
 
@@ -18,7 +18,15 @@ public class User {
         this.name = name;
         this.age = age;
 
-        logger.info(toString());
+      //  logger.info(toString());
+    }
+    public User(Long ID, String name, Integer age) {
+
+        this.ID = ID;
+        this.name = name;
+        this.age = age;
+
+        //  logger.info(toString());
     }
 
     public long getID() {
@@ -38,13 +46,13 @@ public class User {
 
     @Override
     public String toString() {
-        StringBuilder stringBuilder = new StringBuilder(this.getClass().getCanonicalName());
-        stringBuilder.append("ID :");
-        stringBuilder.append(getID() + ";");
+        StringBuilder stringBuilder = new StringBuilder(this.getClass().getSimpleName());
+        stringBuilder.append(" ID :");
+        stringBuilder.append(getID() + "; ");
         stringBuilder.append("Name :");
-        stringBuilder.append(getName() + ";");
+        stringBuilder.append(getName() + "; ");
         stringBuilder.append("Age :");
-        stringBuilder.append(getAge() + ";");
+        stringBuilder.append(getAge() + "; ");
         return stringBuilder.toString();
     }
 }
