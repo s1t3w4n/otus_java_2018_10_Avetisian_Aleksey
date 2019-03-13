@@ -1,7 +1,6 @@
-package dbservise.reflection;
+package executor.reflection;
 
 import entitys.annotations.ID;
-import executor.Executor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 public class ReflectionHelper {
 
@@ -23,13 +23,13 @@ public class ReflectionHelper {
                 logger.info("Empty " + type.getSimpleName() + " created");
                 return type.getDeclaredConstructor().newInstance();
             } else {
-                Class<?>[] classes = /*new Class<?>[]{long.class, String.class, int.class}*/toClasses(args);
+                Class<?>[] classes = getFieldsTypes(type);
                 logger.info("Filled " + type.getSimpleName() + " created");
                 return type.getDeclaredConstructor(classes).newInstance(args);
             }
         } catch (InstantiationException | IllegalAccessException | NoSuchMethodException
                 | InvocationTargetException e) {
-            logger.info("Executor:" + e);
+            logger.info("DBExecutor:" + e);
         }
 
         return null;
@@ -40,6 +40,17 @@ public class ReflectionHelper {
         return Arrays.stream(args).map(Object::getClass).toArray(Class<?>[]::new);
     }
 
+    public static Class<?>[] getFieldsTypes(Class clazz) {
+        List<Class> names = new ArrayList<>();
+        Field[] fields = clazz.getDeclaredFields();
+        for (Field field : fields) {
+            field.setAccessible(true);
+            if(!Modifier.isStatic(field.getModifiers()) && !Modifier.isTransient(field.getModifiers()))
+                names.add(field.getType());
+        }
+        Class[] types = new Class[names.size()];
+        return names.toArray(types);
+    }
     public static List<String> getFildsNames(Object objectData) {
         List<String> names = new ArrayList<>();
         Field[] fields = objectData.getClass().getDeclaredFields();
@@ -71,6 +82,21 @@ public class ReflectionHelper {
     public static String getTableName(Object objectData) {
         logger.info("Table name: " + objectData.getClass().getSimpleName());
         return objectData.getClass().getSimpleName();
+    }
+
+    public static String getId(Object object) {
+        Field field = findAnnotatedField(object.getClass());
+        field.setAccessible(true);
+        String value = null;
+        try {
+            value = field.get(object).toString();
+        } catch (IllegalAccessException e) {
+            logger.info(e.getMessage());
+            throw new RuntimeException(e);
+        }
+
+        logger.info(value);
+        return null;
     }
 
     public static Field findAnnotatedField(Class clazz) {
