@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Stream;
 
 public class ReflectionHelper {
 
@@ -45,19 +44,20 @@ public class ReflectionHelper {
         Field[] fields = clazz.getDeclaredFields();
         for (Field field : fields) {
             field.setAccessible(true);
-            if(!Modifier.isStatic(field.getModifiers()) && !Modifier.isTransient(field.getModifiers()))
+            if (!Modifier.isStatic(field.getModifiers()) && !Modifier.isTransient(field.getModifiers()))
                 names.add(field.getType());
         }
         Class[] types = new Class[names.size()];
         return names.toArray(types);
     }
+
     public static List<String> getFildsNames(Object objectData) {
         List<String> names = new ArrayList<>();
         Field[] fields = objectData.getClass().getDeclaredFields();
         for (Field field : fields) {
             field.setAccessible(true);
-            if(!Modifier.isStatic(field.getModifiers()) && !Modifier.isTransient(field.getModifiers()))
-                    names.add(field.getName());
+            if (!Modifier.isStatic(field.getModifiers()) && !Modifier.isTransient(field.getModifiers()))
+                names.add(field.getName());
         }
         logger.info(names.toString());
         return names;
@@ -68,7 +68,7 @@ public class ReflectionHelper {
         Field[] fields = objectData.getClass().getDeclaredFields();
         for (Field field : fields) {
             field.setAccessible(true);
-            if(!Modifier.isStatic(field.getModifiers()) && !Modifier.isTransient(field.getModifiers()))
+            if (!Modifier.isStatic(field.getModifiers()) && !Modifier.isTransient(field.getModifiers()))
                 try {
                     values.add(field.get(objectData).toString());
                 } catch (IllegalAccessException e) {
@@ -87,7 +87,7 @@ public class ReflectionHelper {
     public static String getId(Object object) {
         Field field = findAnnotatedField(object.getClass());
         field.setAccessible(true);
-        String value = null;
+        String value;
         try {
             value = field.get(object).toString();
         } catch (IllegalAccessException e) {
@@ -95,8 +95,8 @@ public class ReflectionHelper {
             throw new RuntimeException(e);
         }
 
-        logger.info(value);
-        return null;
+        logger.info("ID is: " + value);
+        return value;
     }
 
     public static Field findAnnotatedField(Class clazz) {
@@ -104,7 +104,9 @@ public class ReflectionHelper {
         for (Field field : fields) {
             field.setAccessible(true);
             if (field.isAnnotationPresent(ID.class)) {
-                logger.info(field.getName() + " " + field.getType() + " annotated as ID");
+                ID id = field.getAnnotation(ID.class);
+                logger.info(field.getName() + " " + field.getType() + " annotated as ID"
+                        + " Developer is: " + id.developer());
                 return field;
             }
         }
