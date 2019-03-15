@@ -2,7 +2,7 @@ package executor.reflection;
 
 import java.util.List;
 
-public class ReflectionSQLBulder<T> {
+public class ReflectionSQLBuilder<T> {
 
 
     public String selectSQL(Class clazz) {

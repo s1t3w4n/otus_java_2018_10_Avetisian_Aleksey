@@ -3,7 +3,7 @@ package executor;
 import executor.dbexecutor.SQLQueriesExecutor;
 import executor.dbexecutor.SQLQueriesExecutorImpl;
 import executor.reflection.ReflectionHelper;
-import executor.reflection.ReflectionSQLBulder;
+import executor.reflection.ReflectionSQLBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,7 +18,7 @@ import java.util.Optional;
 public class DaoTemplateImpl<T> implements DaoTemplate<T> {
 
     private final DataSource dataSource;
-    private final ReflectionSQLBulder sqlBulder;
+    private final ReflectionSQLBuilder sqlBuilder;
     private String insert;
     private String update;
     private String select;
@@ -28,7 +28,7 @@ public class DaoTemplateImpl<T> implements DaoTemplate<T> {
     public DaoTemplateImpl(DataSource dataSource) {
         this.dataSource = dataSource;
         logger.info(this.getClass().toString() + " created");
-        sqlBulder = new ReflectionSQLBulder();
+        sqlBuilder = new ReflectionSQLBuilder();
     }
 
     @Override
@@ -45,7 +45,7 @@ public class DaoTemplateImpl<T> implements DaoTemplate<T> {
         try (Connection connection = dataSource.getConnection()) {
             SQLQueriesExecutor<T> executor = new SQLQueriesExecutorImpl<>(connection);
             if (Objects.isNull(select)) {
-                select = sqlBulder.selectSQL(clazz);
+                select = sqlBuilder.selectSQL(clazz);
             }
             logger.info("select query is: \"" + select + "\"");
 
@@ -83,7 +83,7 @@ public class DaoTemplateImpl<T> implements DaoTemplate<T> {
             SQLQueriesExecutor<T> executor = new SQLQueriesExecutorImpl<>(connection);
 
             if (Objects.isNull(insert)) {
-                insert = sqlBulder.insertSQL(objectData);
+                insert = sqlBuilder.insertSQL(objectData);
             }
 
             logger.info("sql insert is: \"" + insert + "\"");
@@ -106,7 +106,7 @@ public class DaoTemplateImpl<T> implements DaoTemplate<T> {
             SQLQueriesExecutor<T> executor = new SQLQueriesExecutorImpl<>(connection);
 
             if (Objects.isNull(update)) {
-                update = sqlBulder.updateSQL(objectData);
+                update = sqlBuilder.updateSQL(objectData);
             }
 
             logger.info("update insert is: \"" + update + "\"");
@@ -132,7 +132,7 @@ public class DaoTemplateImpl<T> implements DaoTemplate<T> {
                 SQLQueriesExecutor<Boolean> SQLQueriesExecutor = new SQLQueriesExecutorImpl<>(connection);
 
                 if (Objects.isNull(select)) {
-                    select = sqlBulder.selectSQL(objectData.getClass());
+                    select = sqlBuilder.selectSQL(objectData.getClass());
                 }
                 logger.info("select query is: \"" + select + "\"");
 
