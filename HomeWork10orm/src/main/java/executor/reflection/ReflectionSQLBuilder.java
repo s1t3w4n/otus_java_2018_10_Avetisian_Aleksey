@@ -7,13 +7,10 @@ public class ReflectionSQLBuilder<T> {
 
     public String selectSQL(Class clazz) {
 
-        StringBuilder sql = new StringBuilder("select * from ");
-        sql.append(clazz.getSimpleName());
-        sql.append(" where ");
-        sql.append(ReflectionHelper.getIdName(clazz));
-        sql.append(" = ?");
-
-        return sql.toString();
+        return "select * from " + clazz.getSimpleName() +
+                " where " +
+                ReflectionHelper.getIdName(clazz) +
+                " = ?";
     }
 
     public String insertSQL(T objectData) {
