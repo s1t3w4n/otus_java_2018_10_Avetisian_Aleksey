@@ -28,7 +28,7 @@ public class ReflectionHelper {
             }
         } catch (InstantiationException | IllegalAccessException | NoSuchMethodException
                 | InvocationTargetException e) {
-            logger.info("DBExecutor:" + e);
+            logger.info("SQLQueryiesExecuter:" + e);
         }
 
         return null;
@@ -51,7 +51,7 @@ public class ReflectionHelper {
         return names.toArray(types);
     }
 
-    public static List<String> getFildsNames(Object objectData) {
+    public static List<String> getFieldsNames(Object objectData) {
         List<String> names = new ArrayList<>();
         Field[] fields = objectData.getClass().getDeclaredFields();
         for (Field field : fields) {
@@ -80,11 +80,11 @@ public class ReflectionHelper {
     }
 
     public static String getTableName(Object objectData) {
-        logger.info("Table name: " + objectData.getClass().getSimpleName());
+        logger.info("SchemaCreator name: " + objectData.getClass().getSimpleName());
         return objectData.getClass().getSimpleName();
     }
 
-    public static String getId(Object object) {
+    public static String getIdValue(Object object) {
         Field field = findAnnotatedField(object.getClass());
         field.setAccessible(true);
         String value;
@@ -97,6 +97,16 @@ public class ReflectionHelper {
 
         logger.info("ID is: " + value);
         return value;
+    }
+
+    public static String getIdName(Class clazz) {
+        Field field = findAnnotatedField(clazz);
+        field.setAccessible(true);
+        String name;
+        name = field.getName();
+
+        logger.info("ID field is: " + name);
+        return name;
     }
 
     public static Field findAnnotatedField(Class clazz) {

@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 
-public interface DBExecutor<T> {
+public interface SQLQueryiesExecuter<T> {
 
     long insertRecord(String sql, List<String> params) throws SQLException;
 

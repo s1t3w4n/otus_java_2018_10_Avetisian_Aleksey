@@ -1,29 +1,24 @@
 package dbservise;
 
 import entitys.User;
-import executor.Executor;
-import executor.ExecutorImpl;
+import executor.DaoTemplate;
 
-import javax.sql.DataSource;
 
 public class DBUserServiceImpl implements DBUserService {
 
-    DataSource dataSource = new DataSourceH2();
+    private final DaoTemplate<User> daoTemplate;
 
-    public DBUserServiceImpl(DataSource dataSource) {
-        this.dataSource = dataSource;
+    public DBUserServiceImpl(DaoTemplate<User> daoTemplate) {
+        this.daoTemplate = daoTemplate;
     }
 
     @Override
     public void save(User user) {
-        Executor<User> executor = new ExecutorImpl<>(dataSource);
-        executor.save(user);
+        daoTemplate.save(user);
     }
 
     @Override
     public User load(long id) {
-        Executor<User> executor = new ExecutorImpl<>(dataSource);
-
-        return executor.load(id,User.class);
+        return daoTemplate.load(id,User.class);
     }
 }

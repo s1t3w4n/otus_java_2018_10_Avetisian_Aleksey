@@ -1,7 +1,7 @@
 package executor;
 
-import executor.dbexecutor.DBExecutor;
-import executor.dbexecutor.DBExecutorImpl;
+import executor.dbexecutor.SQLQueryiesExecuter;
+import executor.dbexecutor.SQLQueryiesExecuterImpl;
 import executor.reflection.ReflectionHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,16 +10,20 @@ import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 
-public class ExecutorImpl<T> implements Executor<T> {
+public class DaoTemplateImpl<T> implements DaoTemplate<T> {
 
     private final DataSource dataSource;
+    private String insert;
+    private String update;
+    private String select;
 
-    private static Logger logger = LoggerFactory.getLogger(ExecutorImpl.class);
+    private static Logger logger = LoggerFactory.getLogger(DaoTemplateImpl.class);
 
-    public ExecutorImpl(DataSource dataSource) {
+    public DaoTemplateImpl(DataSource dataSource) {
         this.dataSource = dataSource;
         logger.info(this.getClass().toString() + " created");
     }
@@ -36,13 +40,14 @@ public class ExecutorImpl<T> implements Executor<T> {
     @Override
     public <T> T load(long id, Class<T> clazz) {
         try (Connection connection = dataSource.getConnection()) {
-            DBExecutor<T> executor = new DBExecutorImpl<>(connection);
-            String sql = String.format
-                    ("select * from %s where %s = ?",
-                            clazz.getSimpleName(),
-                            ReflectionHelper.findAnnotatedField(clazz).getName());
+            SQLQueryiesExecuter<T> executor = new SQLQueryiesExecuterImpl<>(connection);
+            if(Objects.isNull(select)) {
+                select = selectSQL(clazz);
+            }
+            logger.info("select query is: \"" + select + "\"");
 
-            Optional<T> object = executor.selectRecord(sql, id, resultSet -> {
+
+            Optional<T> object = executor.selectRecord(select, id, resultSet -> {
                 try {
                     Object[] fields = new Object[clazz.getDeclaredFields().length];
                     if (resultSet.next()) {
@@ -67,18 +72,30 @@ public class ExecutorImpl<T> implements Executor<T> {
             throw new RuntimeException(e);
         }
     }
+    private String selectSQL(Class<T> clazz) {
+
+        StringBuilder sql = new StringBuilder("select * from ");
+        sql.append(clazz.getSimpleName());
+        sql.append( "where ");
+        sql.append(ReflectionHelper.getIdName(clazz));
+        sql.append(" = ?");
+
+        return sql.toString();
+    }
 
 
     private void insert(T objectData) {
         try (Connection connection = dataSource.getConnection()) {
 
-            DBExecutor<T> executor = new DBExecutorImpl<>(connection);
+            SQLQueryiesExecuter<T> executor = new SQLQueryiesExecuterImpl<>(connection);
 
-            String sql = insertSQL(objectData);
+            if(Objects.isNull(insert)) {
+                insert = insertSQL(objectData);
+            }
 
-            logger.info("sql insert is: \"" + sql + "\"");
+            logger.info("sql insert is: \"" + insert + "\"");
 
-            executor.insertRecord(sql, ReflectionHelper.getFieldsValues(objectData));
+            executor.insertRecord(insert, ReflectionHelper.getFieldsValues(objectData));
             connection.commit();
             logger.info("New user committed.");
         } catch (SQLException e) {
@@ -91,7 +108,7 @@ public class ExecutorImpl<T> implements Executor<T> {
         StringBuilder sql = new StringBuilder("insert into ");
         sql.append(ReflectionHelper.getTableName(objectData));
         sql.append(" (");
-        List<String> names = ReflectionHelper.getFildsNames(objectData);
+        List<String> names = ReflectionHelper.getFieldsNames(objectData);
         for (int i = 0; i < names.size(); i++) {
             sql.append(names.get(i));
             if (i == names.size() - 1) {
@@ -115,16 +132,19 @@ public class ExecutorImpl<T> implements Executor<T> {
     private void update(T objectData) {
         try (Connection connection = dataSource.getConnection()){
 
-            DBExecutor<T> executor = new DBExecutorImpl<>(connection);
+            SQLQueryiesExecuter<T> executor = new SQLQueryiesExecuterImpl<>(connection);
 
-            String sql = updateSQL(objectData);
+            if(Objects.isNull(update)) {
+                update = updateSQL(objectData);
+            }
 
-            logger.info("sql insert is: \"" + sql + "\"");
+            logger.info("update insert is: \"" + update + "\"");
 
             List<String> values = ReflectionHelper.getFieldsValues(objectData);
-            values.add(ReflectionHelper.getId(objectData));
+            values.add(ReflectionHelper.getIdValue(objectData));
+            logger.info(values.toString());
 
-            executor.insertRecord(sql,values);
+            executor.insertRecord(update,values);
             connection.commit();
             logger.info("User updated committed.");
         } catch (SQLException e) {
@@ -138,7 +158,7 @@ public class ExecutorImpl<T> implements Executor<T> {
 
         sql.append(ReflectionHelper.getTableName(objectData));
         sql.append(" set (");
-        List<String> names = ReflectionHelper.getFildsNames(objectData);
+        List<String> names = ReflectionHelper.getFieldsNames(objectData);
         for (int i = 0; i < names.size(); i++) {
             sql.append(names.get(i));
             if (i == names.size() - 1) {
@@ -156,7 +176,9 @@ public class ExecutorImpl<T> implements Executor<T> {
                 sql.append(" ,");
             }
         }
-        sql.append(" where ID = ?");
+        sql.append(" where ");
+        sql.append(ReflectionHelper.getIdName(objectData.getClass()));
+        sql.append(" = ?");
 
         return sql.toString();
     }
@@ -166,8 +188,8 @@ public class ExecutorImpl<T> implements Executor<T> {
         try {
             long id = ReflectionHelper.findAnnotatedField(objectData.getClass()).getLong(objectData);
             try (Connection connection = dataSource.getConnection()) {
-                DBExecutor<Boolean> DBExecutor = new DBExecutorImpl<>(connection);
-                Optional<Boolean> isIn = DBExecutor.selectRecord("select id from user where id = ?", id, resultSet -> {
+                SQLQueryiesExecuter<Boolean> SQLQueryiesExecuter = new SQLQueryiesExecuterImpl<>(connection);
+                Optional<Boolean> isIn = SQLQueryiesExecuter.selectRecord("select id from user where id = ?", id, resultSet -> {
                     boolean existence = false;
                     try {
                         existence = resultSet.next();

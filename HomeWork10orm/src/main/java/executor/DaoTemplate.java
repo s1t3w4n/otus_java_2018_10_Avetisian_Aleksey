@@ -1,6 +1,6 @@
 package executor;
 
-public interface Executor<T> {
+public interface DaoTemplate<T> {
 
     void save(T objectData);
 

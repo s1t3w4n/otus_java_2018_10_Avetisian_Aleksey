@@ -5,11 +5,11 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 
-public class DBExecutorImpl<T> implements DBExecutor<T> {
+public class SQLQueryiesExecuterImpl<T> implements SQLQueryiesExecuter<T> {
 
     private final Connection connection;
 
-    public DBExecutorImpl(Connection connection) {
+    public SQLQueryiesExecuterImpl(Connection connection) {
         this.connection = connection;
     }
 

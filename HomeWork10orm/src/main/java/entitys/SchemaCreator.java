@@ -6,10 +6,10 @@ import org.slf4j.LoggerFactory;
 import javax.sql.DataSource;
 import java.sql.*;
 
-public class Table {
-    private static Logger logger = LoggerFactory.getLogger(Table.class);
+public class SchemaCreator {
+    private static Logger logger = LoggerFactory.getLogger(SchemaCreator.class);
 
-    public void createTable(DataSource dataSource) throws SQLException {
+    public static void createUserTable(DataSource dataSource) throws SQLException {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement pst = connection.prepareStatement(
                      "create table user(id bigint(20) NOT NULL auto_increment, name varchar(255), age int(3))")) {
@@ -23,6 +23,6 @@ public class Table {
             }
             logger.info(columns.toString());
         }
-        logger.info("Table created");
+        logger.info("SchemaCreator created");
     }
 }
