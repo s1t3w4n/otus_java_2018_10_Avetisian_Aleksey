@@ -1,7 +1,7 @@
 package executor;
 
-import executor.dbexecutor.SQLQueryiesExecuter;
-import executor.dbexecutor.SQLQueryiesExecuterImpl;
+import executor.dbexecutor.SQLQueriesExecutor;
+import executor.dbexecutor.SQLQueriesExecutorImpl;
 import executor.reflection.ReflectionHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,7 +40,7 @@ public class DaoTemplateImpl<T> implements DaoTemplate<T> {
     @Override
     public <T> T load(long id, Class<T> clazz) {
         try (Connection connection = dataSource.getConnection()) {
-            SQLQueryiesExecuter<T> executor = new SQLQueryiesExecuterImpl<>(connection);
+            SQLQueriesExecutor<T> executor = new SQLQueriesExecutorImpl<>(connection);
             if(Objects.isNull(select)) {
                 select = selectSQL(clazz);
             }
@@ -72,11 +72,11 @@ public class DaoTemplateImpl<T> implements DaoTemplate<T> {
             throw new RuntimeException(e);
         }
     }
-    private String selectSQL(Class<T> clazz) {
+    private String selectSQL(Class clazz) {
 
         StringBuilder sql = new StringBuilder("select * from ");
         sql.append(clazz.getSimpleName());
-        sql.append( "where ");
+        sql.append( " where ");
         sql.append(ReflectionHelper.getIdName(clazz));
         sql.append(" = ?");
 
@@ -87,7 +87,7 @@ public class DaoTemplateImpl<T> implements DaoTemplate<T> {
     private void insert(T objectData) {
         try (Connection connection = dataSource.getConnection()) {
 
-            SQLQueryiesExecuter<T> executor = new SQLQueryiesExecuterImpl<>(connection);
+            SQLQueriesExecutor<T> executor = new SQLQueriesExecutorImpl<>(connection);
 
             if(Objects.isNull(insert)) {
                 insert = insertSQL(objectData);
@@ -132,7 +132,7 @@ public class DaoTemplateImpl<T> implements DaoTemplate<T> {
     private void update(T objectData) {
         try (Connection connection = dataSource.getConnection()){
 
-            SQLQueryiesExecuter<T> executor = new SQLQueryiesExecuterImpl<>(connection);
+            SQLQueriesExecutor<T> executor = new SQLQueriesExecutorImpl<>(connection);
 
             if(Objects.isNull(update)) {
                 update = updateSQL(objectData);
@@ -188,8 +188,8 @@ public class DaoTemplateImpl<T> implements DaoTemplate<T> {
         try {
             long id = ReflectionHelper.findAnnotatedField(objectData.getClass()).getLong(objectData);
             try (Connection connection = dataSource.getConnection()) {
-                SQLQueryiesExecuter<Boolean> SQLQueryiesExecuter = new SQLQueryiesExecuterImpl<>(connection);
-                Optional<Boolean> isIn = SQLQueryiesExecuter.selectRecord("select id from user where id = ?", id, resultSet -> {
+                SQLQueriesExecutor<Boolean> SQLQueriesExecutor = new SQLQueriesExecutorImpl<>(connection);
+                Optional<Boolean> isIn = SQLQueriesExecutor.selectRecord("select id from user where id = ?", id, resultSet -> {
                     boolean existence = false;
                     try {
                         existence = resultSet.next();

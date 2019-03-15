@@ -28,7 +28,7 @@ public class ReflectionHelper {
             }
         } catch (InstantiationException | IllegalAccessException | NoSuchMethodException
                 | InvocationTargetException e) {
-            logger.info("SQLQueryiesExecuter:" + e);
+            logger.info("SQLQueriesExecutor:" + e);
         }
 
         return null;
