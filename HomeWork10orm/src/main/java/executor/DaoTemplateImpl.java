@@ -3,6 +3,7 @@ package executor;
 import executor.dbexecutor.SQLQueriesExecutor;
 import executor.dbexecutor.SQLQueriesExecutorImpl;
 import executor.reflection.ReflectionHelper;
+import executor.reflection.ReflectionSQLBulder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,6 +18,7 @@ import java.util.Optional;
 public class DaoTemplateImpl<T> implements DaoTemplate<T> {
 
     private final DataSource dataSource;
+    private final ReflectionSQLBulder sqlBulder;
     private String insert;
     private String update;
     private String select;
@@ -26,6 +28,7 @@ public class DaoTemplateImpl<T> implements DaoTemplate<T> {
     public DaoTemplateImpl(DataSource dataSource) {
         this.dataSource = dataSource;
         logger.info(this.getClass().toString() + " created");
+        sqlBulder = new ReflectionSQLBulder();
     }
 
     @Override
@@ -41,8 +44,8 @@ public class DaoTemplateImpl<T> implements DaoTemplate<T> {
     public <T> T load(long id, Class<T> clazz) {
         try (Connection connection = dataSource.getConnection()) {
             SQLQueriesExecutor<T> executor = new SQLQueriesExecutorImpl<>(connection);
-            if(Objects.isNull(select)) {
-                select = selectSQL(clazz);
+            if (Objects.isNull(select)) {
+                select = sqlBulder.selectSQL(clazz);
             }
             logger.info("select query is: \"" + select + "\"");
 
@@ -72,16 +75,6 @@ public class DaoTemplateImpl<T> implements DaoTemplate<T> {
             throw new RuntimeException(e);
         }
     }
-    private String selectSQL(Class clazz) {
-
-        StringBuilder sql = new StringBuilder("select * from ");
-        sql.append(clazz.getSimpleName());
-        sql.append( " where ");
-        sql.append(ReflectionHelper.getIdName(clazz));
-        sql.append(" = ?");
-
-        return sql.toString();
-    }
 
 
     private void insert(T objectData) {
@@ -89,8 +82,8 @@ public class DaoTemplateImpl<T> implements DaoTemplate<T> {
 
             SQLQueriesExecutor<T> executor = new SQLQueriesExecutorImpl<>(connection);
 
-            if(Objects.isNull(insert)) {
-                insert = insertSQL(objectData);
+            if (Objects.isNull(insert)) {
+                insert = sqlBulder.insertSQL(objectData);
             }
 
             logger.info("sql insert is: \"" + insert + "\"");
@@ -103,39 +96,17 @@ public class DaoTemplateImpl<T> implements DaoTemplate<T> {
         }
     }
 
-    private String insertSQL(T objectData) {
 
-        StringBuilder sql = new StringBuilder("insert into ");
-        sql.append(ReflectionHelper.getTableName(objectData));
-        sql.append(" (");
-        List<String> names = ReflectionHelper.getFieldsNames(objectData);
-        for (int i = 0; i < names.size(); i++) {
-            sql.append(names.get(i));
-            if (i == names.size() - 1) {
-                sql.append(")");
-            } else {
-                sql.append(" ,");
-            }
-        }
-        sql.append(" values (");
-        for (int i = 0; i < names.size(); i++) {
-            sql.append("?");
-            if (i == names.size() - 1) {
-                sql.append(")");
-            } else {
-                sql.append(" ,");
-            }
-        }
 
-        return sql.toString();
-    }
+
+
     private void update(T objectData) {
-        try (Connection connection = dataSource.getConnection()){
+        try (Connection connection = dataSource.getConnection()) {
 
             SQLQueriesExecutor<T> executor = new SQLQueriesExecutorImpl<>(connection);
 
-            if(Objects.isNull(update)) {
-                update = updateSQL(objectData);
+            if (Objects.isNull(update)) {
+                update = sqlBulder.updateSQL(objectData);
             }
 
             logger.info("update insert is: \"" + update + "\"");
@@ -144,7 +115,7 @@ public class DaoTemplateImpl<T> implements DaoTemplate<T> {
             values.add(ReflectionHelper.getIdValue(objectData));
             logger.info(values.toString());
 
-            executor.insertRecord(update,values);
+            executor.insertRecord(update, values);
             connection.commit();
             logger.info("User updated committed.");
         } catch (SQLException e) {
@@ -153,56 +124,33 @@ public class DaoTemplateImpl<T> implements DaoTemplate<T> {
 
     }
 
-    private String updateSQL(T objectData) {
-        StringBuilder sql = new StringBuilder("update ");
-
-        sql.append(ReflectionHelper.getTableName(objectData));
-        sql.append(" set (");
-        List<String> names = ReflectionHelper.getFieldsNames(objectData);
-        for (int i = 0; i < names.size(); i++) {
-            sql.append(names.get(i));
-            if (i == names.size() - 1) {
-                sql.append(")");
-            } else {
-                sql.append(" ,");
-            }
-        }
-        sql.append(" = (");
-        for (int i = 0; i < names.size(); i++) {
-            sql.append("?");
-            if (i == names.size() - 1) {
-                sql.append(")");
-            } else {
-                sql.append(" ,");
-            }
-        }
-        sql.append(" where ");
-        sql.append(ReflectionHelper.getIdName(objectData.getClass()));
-        sql.append(" = ?");
-
-        return sql.toString();
-    }
-
 
     private boolean checkExistenceInDB(T objectData) {
         try {
             long id = ReflectionHelper.findAnnotatedField(objectData.getClass()).getLong(objectData);
             try (Connection connection = dataSource.getConnection()) {
                 SQLQueriesExecutor<Boolean> SQLQueriesExecutor = new SQLQueriesExecutorImpl<>(connection);
-                Optional<Boolean> isIn = SQLQueriesExecutor.selectRecord("select id from user where id = ?", id, resultSet -> {
-                    boolean existence = false;
-                    try {
-                        existence = resultSet.next();
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
-                    if (existence) {
-                        logger.info("Object is exist in data base");
-                    } else {
-                        logger.info("Object isn't exist in data base");
-                    }
-                    return existence;
-                });
+
+                if (Objects.isNull(select)) {
+                    select = sqlBulder.selectSQL(objectData.getClass());
+                }
+                logger.info("select query is: \"" + select + "\"");
+
+                Optional<Boolean> isIn = SQLQueriesExecutor.selectRecord
+                        (select, id, resultSet -> {
+                            boolean existence = false;
+                            try {
+                                existence = resultSet.next();
+                            } catch (SQLException e) {
+                                e.printStackTrace();
+                            }
+                            if (existence) {
+                                logger.info("Object is exist in data base");
+                            } else {
+                                logger.info("Object isn't exist in data base");
+                            }
+                            return existence;
+                        });
                 return isIn.get();
             } catch (SQLException e) {
                 e.printStackTrace();
