@@ -51,6 +51,7 @@ public class Phone {
         stringBuilder.append(id);
         stringBuilder.append("; Phone: ");
         stringBuilder.append(number);
+        stringBuilder.append(";");
         return stringBuilder.toString();
     }
 }

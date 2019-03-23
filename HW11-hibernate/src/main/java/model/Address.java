@@ -49,6 +49,7 @@ public class Address {
         stringBuilder.append(id);
         stringBuilder.append("; Street: ");
         stringBuilder.append(street);
+        stringBuilder.append(";");
         return stringBuilder.toString();
     }
 }

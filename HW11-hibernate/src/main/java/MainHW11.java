@@ -25,26 +25,21 @@ public class MainHW11 {
         Phone phone_u_2 = new Phone("4321", updated_user);
         updated_user.addPhone(phone_u_1);
         updated_user.addPhone(phone_u_2);
-        userService.save(updated_user);
-        //LOAD
         updated_user.setAge(55);
         userService.save(updated_user);
+        //LOAD
         User loaded_user = userService.load(007l);
+        //wrong id
+        userService.load(333);
 
         System.out.println("CREATED");
         System.out.println(created_user.toString());
-        System.out.println(created_user.getPhones());
-        System.out.println(created_user.getAddress());
 
         System.out.println("UPDATED");
         System.out.println(updated_user.toString());
-        System.out.println(updated_user.getPhones());
-        System.out.println(updated_user.getAddress());
 
         System.out.println("LOADED");
         System.out.println(loaded_user.toString());
-        System.out.println(loaded_user.getPhones());
-        System.out.println(loaded_user.getAddress());
     }
 
     private static User clone(User user) throws IOException, ClassNotFoundException {

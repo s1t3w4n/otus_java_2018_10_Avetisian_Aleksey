@@ -79,6 +79,8 @@ public class User implements Serializable {
         stringBuilder.append(name + "; ");
         stringBuilder.append("Age :");
         stringBuilder.append(age + "; ");
+        stringBuilder.append(getAddress());
+        phones.forEach(phone -> stringBuilder.append(phone.toString()));
         return stringBuilder.toString();
     }
 }
