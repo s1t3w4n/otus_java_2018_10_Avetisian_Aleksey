@@ -23,11 +23,18 @@ public class HibernateConfigurationUtil {
 
         public HibernateConfigurationBuilder setConfigResource(String resource) {
             this.resource = resource;
+            LOGGER.info("Set resource: " + resource);
             return this;
         }
 
         public HibernateConfigurationBuilder addAnnotatedClasses(Class... classes) {
             this.classes = classes;
+            StringBuilder stringBuilder = new StringBuilder();
+            for (Class clazz : classes) {
+                stringBuilder.append(clazz.getSimpleName());
+                stringBuilder.append(";");
+            }
+            LOGGER.info("Set annotated classes : " + stringBuilder);
             return this;
         }
 
@@ -44,6 +51,7 @@ public class HibernateConfigurationUtil {
                         configuration.addAnnotatedClass(clazz);
                     }
                 }
+                LOGGER.info("Configuration built");
 
             } catch (Exception e) {
                 LOGGER.error(e.getMessage());

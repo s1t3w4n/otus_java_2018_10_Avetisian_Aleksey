@@ -20,6 +20,7 @@ public class DaoTemplateImpl<T> implements DaoTemplate<T> {
     public DaoTemplateImpl(Class<T> clazz, Configuration configuration) {
         this.clazz = clazz;
         this.sessionFactory = configuration.buildSessionFactory();
+        logger.info("Session factory built");
     }
 
 
