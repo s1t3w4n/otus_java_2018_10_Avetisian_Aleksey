@@ -2,19 +2,25 @@ package service;
 
 import dao.DaoTemplate;
 import dao.DaoTemplateImpl;
+import model.Address;
+import model.Phone;
 import model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import utils.HibernateConfigurationUtil;
 
 import java.util.Objects;
 
 public class UserServiceImpl implements UserService {
 
-    private final DaoTemplate daoTemplate;
+    private final DaoTemplate<User> daoTemplate;
     private final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
     public UserServiceImpl() {
-        this.daoTemplate = new DaoTemplateImpl(User.class);
+        this.daoTemplate = new DaoTemplateImpl<>(User.class, HibernateConfigurationUtil.builder()
+                .setConfigResource("hibernate.cfg.xml")
+                .addAnnotatedClasses(User.class, Phone.class, Address.class)
+                .build());
     }
 
     @Override
@@ -30,7 +36,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User load(long id) {
-        User user = (User) daoTemplate.loadById(id);
+        User user = daoTemplate.loadById(id);
         if (Objects.nonNull(user)) {
             logger.info("Loaded: " + user.toString());
         } else {
