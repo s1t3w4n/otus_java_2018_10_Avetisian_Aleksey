@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Objects;
+import java.util.function.Function;
 
 
 public class DaoTemplateImpl<T> implements DaoTemplate<T> {
@@ -26,59 +27,37 @@ public class DaoTemplateImpl<T> implements DaoTemplate<T> {
 
     @Override
     public T loadById(long id) {
-        T element;
-        logger.info("Getting element " + clazz.getSimpleName() + " with id: " + id);
-        try (Session session = sessionFactory.openSession()) {
-            Transaction transaction = null;
-            try {
-                transaction = session.beginTransaction();
-                element = session.get(clazz, id);
-                transaction.commit();
-            } catch (Exception e) {
-                if (Objects.nonNull(transaction)) {
-                    transaction.rollback();
-                }
-                logger.error("Something went wrong in load: " + e.getMessage());
-                element = null;
-            }
-        }
-        return element;
+        return makeTransaction(session -> session.get(clazz,id));
     }
 
     @Override
     public void insert(T element) {
-        try (Session session = sessionFactory.openSession()) {
-            Transaction transaction = null;
-            try {
-                transaction = session.beginTransaction();
-                session.save(element);
-                transaction.commit();
-            } catch (Exception e) {
-                if (Objects.nonNull(transaction)) {
-                    transaction.rollback();
-                }
-                logger.error("Something went wrong in insert: " + e.getMessage());
-            }
-        }
+        makeTransaction(session -> {session.save(element); return null;});
         logger.info("Inserted new element: " + element.toString());
     }
 
     @Override
     public void update(T element) {
+        makeTransaction(session -> {session.update(element); return null;});
+        logger.info("Updated element: " + element.toString());
+    }
+
+    private T makeTransaction(Function<Session, T> function) {
+        T element;
         try (Session session = sessionFactory.openSession()) {
             Transaction transaction = null;
             try {
                 transaction = session.beginTransaction();
-                session.update(element);
+                element = function.apply(session);
                 transaction.commit();
             } catch (Exception e) {
                 if (Objects.nonNull(transaction)) {
                     transaction.rollback();
+                    logger.error("Something went wrong: " + e.getMessage());
                 }
-                logger.error("Something went wrong in update: " + e.getMessage());
+                element = null;
             }
         }
-        logger.info("Updated element: " + element.toString());
+        return element;
     }
-
 }
