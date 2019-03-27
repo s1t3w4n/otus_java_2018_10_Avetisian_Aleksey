@@ -9,6 +9,8 @@ import java.util.List;
 public class User implements Serializable {
     @Id
     private long id;
+    @Column(name = "password")
+    private String password;
     @Column(name = "name")
     private String name;
     @Column(name = "age")
@@ -23,11 +25,20 @@ public class User implements Serializable {
     public User() {
     }
 
-    public User(String name, int age, long id) {
+    public User(String name,String password, int age, long id) {
         this.id = id;
+        this.password = password;
         this.name = name;
         this.age = age;
         phones = new ArrayList<>();
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public void addPhone(Phone phone) {
@@ -75,6 +86,8 @@ public class User implements Serializable {
         StringBuilder stringBuilder = new StringBuilder(this.getClass().getSimpleName());
         stringBuilder.append(" id :");
         stringBuilder.append(id + "; ");
+        stringBuilder.append("Password :");
+        stringBuilder.append(password + "; ");
         stringBuilder.append("Name :");
         stringBuilder.append(name + "; ");
         stringBuilder.append("Age :");

@@ -14,6 +14,8 @@
         <maven.compiler.target>8</maven.compiler.target>
 
         <junit.jupiter.version>5.3.2</junit.jupiter.version>
+        <jetty.version>9.4.9.v20180320</jetty.version>
+        <freemarker.version>2.3.28</freemarker.version>
     </properties>
 
     <name>HW12-webserver</name>
@@ -47,6 +49,27 @@
             <version>${junit.jupiter.version}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-server</artifactId>
+            <version>${jetty.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-webapp</artifactId>
+            <version>${jetty.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.freemarker</groupId>
+            <artifactId>freemarker</artifactId>
+            <version>${freemarker.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>ru.otus</groupId>
+            <artifactId>HW11-hibernate</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
 
     </dependencies>
 
@@ -77,7 +100,8 @@
                         </goals>
                         <configuration>
                             <transformers>
-                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                <transformer
+                                        implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
                                     <manifestEntries>
                                         <Main-Class>MainHW12</Main-Class>
                                     </manifestEntries>

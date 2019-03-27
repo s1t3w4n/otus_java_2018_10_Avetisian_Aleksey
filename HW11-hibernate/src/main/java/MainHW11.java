@@ -11,11 +11,11 @@ public class MainHW11 {
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         UserService userService = new UserServiceImpl();
         //CREATE
-        User created_user = new User("Ivan", 33, 007L);
+        User created_user = new User("Ivan","qwerty", 33, 007L);
         userService.save(created_user);
-        User created_user1 = new User("Bogdan", 22, 123);
+        User created_user1 = new User("Bogdan","qwerty", 22, 123);
         userService.save(created_user);
-        User created_user2 = new User("Fontan", 44, 99999);
+        User created_user2 = new User("Fontan","qwerty", 44, 99999);
         userService.save(created_user);
         //UPDATE
         User updated_user = clone(created_user);
