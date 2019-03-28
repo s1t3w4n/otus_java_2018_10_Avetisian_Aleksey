@@ -1,14 +1,18 @@
 package resource;
 
+import filters.AdminFilter;
 import model.User;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.HandlerList;
 import org.eclipse.jetty.server.handler.ResourceHandler;
+import org.eclipse.jetty.servlet.FilterHolder;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.eclipse.jetty.util.resource.Resource;
 import service.UserService;
 import service.UserServiceImpl;
+import servlets.AddUpdateServlet;
+import servlets.AdminServlet;
 import servlets.LoginServlet;
 import servlets.MainServlet;
 
@@ -29,6 +33,7 @@ public class MyResources {
         resourceHandler.setBaseResource(resource);
 
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
+        //addFilters(context);
         addServlets(context);
 
         Server server = new Server(PORT);
@@ -39,8 +44,16 @@ public class MyResources {
     }
 
     private void addServlets(ServletContextHandler context) {
-        context.addServlet(new ServletHolder(new MainServlet()), "/start");
+        context.addServlet(new ServletHolder(new MainServlet()), "/main");
         context.addServlet(new ServletHolder(new LoginServlet(service)), "/login");
+        context.addServlet(new ServletHolder(new AdminServlet()), "/admin");
+        context.addServlet(new ServletHolder(new AddUpdateServlet(service)), "/add");
+    }
+
+    private void addFilters(ServletContextHandler context) {
+        context.addFilter(new FilterHolder(new AdminFilter()),"/admin", null);
+        context.addFilter(new FilterHolder(new AdminFilter()),"/add", null);
+        context.addFilter(new FilterHolder(new AdminFilter()),"/show", null);
     }
 
     private UserService addDBService() {

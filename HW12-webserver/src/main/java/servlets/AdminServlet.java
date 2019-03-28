@@ -9,18 +9,15 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class AdminServlet extends HttpServlet {
-    private static final String TEMPLATE = "login.html";
     private final TemplateProcessor templateProcessor;
+    private final static String TEMPLATE = "admin.html";
 
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        doPost(req,resp);
+    public AdminServlet() {
+        templateProcessor = new TemplateProcessor();
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String id = req.getParameter("id");
-        String password = req.getParameter("password");
-        String age = req.getParameter("age");
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.getWriter().println(templateProcessor.getPage(TEMPLATE,null));
     }
 }

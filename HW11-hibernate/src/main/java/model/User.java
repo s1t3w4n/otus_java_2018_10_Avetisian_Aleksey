@@ -26,10 +26,10 @@ public class User implements Serializable {
     }
 
     public User(String name,String password, int age, long id) {
-        this.id = id;
-        this.password = password;
         this.name = name;
+        this.password = password;
         this.age = age;
+        this.id = id;
         phones = new ArrayList<>();
     }
 
