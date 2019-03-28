@@ -16,9 +16,11 @@ import java.util.Objects;
 
 public class LoginServlet extends HttpServlet {
 
-    private static final String RESENT_LOGIN = "id";
-    private static final String DEFAULT = "UNKNOWN";
     private static final String TEMPLATE = "login.html";
+    private static final String STATUS = "status";
+    private static final String DEFAULT_STATUS = "Type";
+    private static final String COLOR = "color";
+    private static final String DEFAULT_COLOR = "blue";
 
     private final UserService service;
     private final TemplateProcessor templateProcessor;
@@ -40,16 +42,27 @@ public class LoginServlet extends HttpServlet {
 
         String id = req.getParameter("id");
         String password = req.getParameter("password");
+        String status = DEFAULT_STATUS;
+        String color = DEFAULT_COLOR;
+
         if(Objects.nonNull(id)) {
             User user = service.load(Long.parseLong(id, 10));
             if (Objects.nonNull(user) && user.getPassword().equals(password)) {
                 req.getSession();
+                req.getSession(false).setAttribute("id", user.getId());
+                req.getSession(false).setAttribute("name", user.getName());
+                status = "Valid";
+                color = "green";
             } else {
                 resp.setStatus(HttpStatus.FORBIDDEN_403);
+                status = "Invalid";
+                color = "red";
             }
         }
 
         Map<String,Object> variables = new HashMap<>();
+        variables.put(STATUS,status);
+        variables.put(COLOR,color);
         /*//variables.put(RESENT_LOGIN, DEFAULT);
         resp.setContentType("text/json;charset=utf-8");*/
         resp.getWriter().println(templateProcessor.getPage(TEMPLATE,variables));

@@ -10,7 +10,7 @@ import org.eclipse.jetty.util.resource.Resource;
 import service.UserService;
 import service.UserServiceImpl;
 import servlets.LoginServlet;
-import servlets.TestServlet;
+import servlets.MainServlet;
 
 
 public class MyResources {
@@ -23,6 +23,7 @@ public class MyResources {
     }
 
     public void fillResourcesAndStart() throws Exception {
+
         ResourceHandler resourceHandler = new ResourceHandler();
         Resource resource = Resource.newClassPathResource(PUBLIC_HTML);
         resourceHandler.setBaseResource(resource);
@@ -38,8 +39,8 @@ public class MyResources {
     }
 
     private void addServlets(ServletContextHandler context) {
+        context.addServlet(new ServletHolder(new MainServlet()), "/start");
         context.addServlet(new ServletHolder(new LoginServlet(service)), "/login");
-        context.addServlet(new ServletHolder(new TestServlet()), "/test");
     }
 
     private UserService addDBService() {
