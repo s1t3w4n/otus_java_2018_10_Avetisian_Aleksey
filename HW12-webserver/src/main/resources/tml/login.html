@@ -3,20 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <title>login</title>
+    <style>
+        table {
+            margin: auto;
+            border-collapse: collapse;
+        }
+    </style>
 </head>
 <body>
+<p align="center"><a href="main">Main</a>|<a href="admin">Admin</a>
 <form action="/login" method="post">
-    <label for="login-field">ID</label>
-    <input type="text" name="id" id="login-field">
-    <br>
-    <br>
-    <label for="password-field">PASSWORD</label>
-    <input type="password" name="password" id="password-field">
-    <input type="submit" value="LOGIN">
+    <table>
+        <tr>
+            <td>
+                <label for="login-field">ID</label>
+            </td>
+            <td>
+                <input type="text" name="id" id="login-field">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="password-field">PASSWORD</label>
+            </td>
+            <td>
+                <input type="password" name="password" id="password-field">
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" align="center">
+                <input type="submit" value="LOGIN">
+            </td>
+        </tr>
+    </table>
 </form>
-<p style="color:${color}">${status} id/password</p>
+</p>
+<p align="center" style="color:${color}">${status} id/password</p>
 
-<p><a href="main">Main</a>|<a href="admin">Admin</a></p>
 
 </body>
 </html>
