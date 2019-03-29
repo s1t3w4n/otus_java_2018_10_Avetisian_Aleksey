@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import utils.HibernateConfigurationUtil;
 
+import java.util.List;
 import java.util.Objects;
 
 public class UserServiceImpl implements UserService {
@@ -43,5 +44,16 @@ public class UserServiceImpl implements UserService {
             logger.info("No such user with id: " + id);
         }
         return user;
+    }
+
+    @Override
+    public List<User> loadAll() {
+        List<User> users = daoTemplate.loadAll();
+        if (Objects.nonNull(users)) {
+            logger.info("Loaded: " + users.toString());
+        } else {
+            logger.info("Empty table");
+        }
+        return users;
     }
 }

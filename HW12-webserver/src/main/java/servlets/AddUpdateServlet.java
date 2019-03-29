@@ -33,5 +33,6 @@ public class AddUpdateServlet extends HttpServlet {
         String id = req.getParameter("id");
 
         userService.save(new User(name, password, Integer.parseInt(age), Long.parseLong(id)));
+        doGet(req,resp);
     }
 }

@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Objects;
 
 public class AdminFilter implements Filter {
     @Override
@@ -16,15 +17,19 @@ public class AdminFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        HttpServletRequest request = (HttpServletRequest)servletRequest;
+        HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
         HttpSession session = request.getSession(false);
+        if (Objects.nonNull(session)) {
 
-        if (session.getAttribute("id").equals(String.valueOf(1))) {
-            filterChain.doFilter(servletRequest,servletResponse);
+            if (((Long)(session.getAttribute("id"))).equals(1l)) {
+                filterChain.doFilter(servletRequest, servletResponse);
+            } else {
+                response.setStatus(HttpStatus.FORBIDDEN_403);
+            }
         } else {
-            response.setStatus(HttpStatus.FORBIDDEN_403);
+            response.sendRedirect(request.getContextPath() + "/login");
         }
     }
 

@@ -11,10 +11,7 @@ import org.eclipse.jetty.servlet.ServletHolder;
 import org.eclipse.jetty.util.resource.Resource;
 import service.UserService;
 import service.UserServiceImpl;
-import servlets.AddUpdateServlet;
-import servlets.AdminServlet;
-import servlets.LoginServlet;
-import servlets.MainServlet;
+import servlets.*;
 
 
 public class MyResources {
@@ -33,7 +30,7 @@ public class MyResources {
         resourceHandler.setBaseResource(resource);
 
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
-        //addFilters(context);
+        addFilters(context);
         addServlets(context);
 
         Server server = new Server(PORT);
@@ -48,6 +45,7 @@ public class MyResources {
         context.addServlet(new ServletHolder(new LoginServlet(service)), "/login");
         context.addServlet(new ServletHolder(new AdminServlet()), "/admin");
         context.addServlet(new ServletHolder(new AddUpdateServlet(service)), "/add");
+        context.addServlet(new ServletHolder(new ShowServlet(service)), "/show");
     }
 
     private void addFilters(ServletContextHandler context) {

@@ -7,6 +7,7 @@ import org.hibernate.cfg.Configuration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.function.Function;
 
@@ -24,8 +25,26 @@ public class DaoTemplateImpl<T> implements DaoTemplate<T> {
         logger.info("Session factory built");
     }
 
-
     @Override
+    public List<T> loadAll() {
+        List<T> table;
+        try (Session session = sessionFactory.openSession()){
+            Transaction transaction = null;
+            try {
+                transaction = session.beginTransaction();
+                table = session.createCriteria(clazz).list();
+                transaction.commit();
+            } catch (Exception e) {
+                if (Objects.nonNull(transaction)) {
+                    transaction.rollback();
+                    logger.error("Something went wrong: " + e.getMessage());
+                }
+                table = null;
+            }
+            return table;
+        }
+    }
+
     public T loadById(long id) {
         return makeTransaction(session -> session.get(clazz,id));
     }
