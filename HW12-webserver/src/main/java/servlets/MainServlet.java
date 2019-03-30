@@ -16,7 +16,12 @@ public class MainServlet extends HttpServlet {
     private static final String NAME = "name";
     private static final String DEFAULT_NAME_VALUE = "Guest";
 
-    private static final TemplateProcessor templateProcessor = new TemplateProcessor();
+    private final TemplateProcessor templateProcessor;
+
+    public MainServlet(TemplateProcessor templateProcessor) {
+        this.templateProcessor = templateProcessor;
+    }
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         HttpSession session = req.getSession(false);
@@ -26,8 +31,8 @@ public class MainServlet extends HttpServlet {
         } else {
             nameValue = DEFAULT_NAME_VALUE;
         }
-        Map<String,Object> variabels = new HashMap<>();
-        variabels.put(NAME, nameValue);
-        resp.getWriter().println(templateProcessor.getPage(TEMPLATE,variabels));
+        Map<String,Object> variables = new HashMap<>();
+        variables.put(NAME, nameValue);
+        resp.getWriter().println(templateProcessor.getPage(TEMPLATE,variables));
     }
 }

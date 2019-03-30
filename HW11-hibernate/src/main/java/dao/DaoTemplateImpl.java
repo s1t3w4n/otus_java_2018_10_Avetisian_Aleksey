@@ -7,6 +7,8 @@ import org.hibernate.cfg.Configuration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Function;
@@ -31,8 +33,11 @@ public class DaoTemplateImpl<T> implements DaoTemplate<T> {
         try (Session session = sessionFactory.openSession()){
             Transaction transaction = null;
             try {
+                CriteriaBuilder builder = session.getCriteriaBuilder();
+                CriteriaQuery<T> criteria = builder.createQuery(clazz);
                 transaction = session.beginTransaction();
-                table = session.createCriteria(clazz).list();
+                criteria.from(clazz);
+                table = session.createQuery(criteria).getResultList();
                 transaction.commit();
             } catch (Exception e) {
                 if (Objects.nonNull(transaction)) {

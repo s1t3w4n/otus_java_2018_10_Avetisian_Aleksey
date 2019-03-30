@@ -18,9 +18,11 @@ public class MyResources {
     private final static int PORT = 8080;
     private final static String PUBLIC_HTML = "/static";
     private final UserService service;
+    private final TemplateProcessor templateProcessor;
 
     public MyResources() {
         service = addDBService();
+        templateProcessor = new TemplateProcessor();
     }
 
     public void fillResourcesAndStart() throws Exception {
@@ -41,11 +43,11 @@ public class MyResources {
     }
 
     private void addServlets(ServletContextHandler context) {
-        context.addServlet(new ServletHolder(new MainServlet()), "/main");
-        context.addServlet(new ServletHolder(new LoginServlet(service)), "/login");
-        context.addServlet(new ServletHolder(new AdminServlet()), "/admin");
-        context.addServlet(new ServletHolder(new AddUpdateServlet(service)), "/add");
-        context.addServlet(new ServletHolder(new ShowServlet(service)), "/show");
+        context.addServlet(new ServletHolder(new MainServlet(templateProcessor)), "/main");
+        context.addServlet(new ServletHolder(new LoginServlet(service, templateProcessor)), "/login");
+        context.addServlet(new ServletHolder(new AdminServlet(templateProcessor)), "/admin");
+        context.addServlet(new ServletHolder(new AddUpdateServlet(service, templateProcessor)), "/add");
+        context.addServlet(new ServletHolder(new ShowServlet(service,templateProcessor)), "/show");
     }
 
     private void addFilters(ServletContextHandler context) {

@@ -4,85 +4,77 @@ import model.User;
 import resource.TemplateProcessor;
 import service.UserService;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class AddUpdateServlet extends HttpServlet {
     private static final String TEMPLATE = "add.html";
-    private final TemplateProcessor templateProcessor;
-    private final UserService userService;
-    private final static String DEFAULT_MESAGE = "Fill all fields";
-    private final static String MESAGE = "mesage";
+    private final static String DEFAULT_MESSAGE = "Fill all fields";
+    private final static String MESSAGE = "message";
     private final static String DEFAULT_COLOR = "green";
     private final static String COLOR = "color";
-    private String mesage;
-    private String color;
 
 
-    public AddUpdateServlet(UserService userService) {
-        templateProcessor = new TemplateProcessor();
+    private final TemplateProcessor templateProcessor;
+    private final UserService userService;
+
+
+    public AddUpdateServlet(UserService userService, TemplateProcessor templateProcessor) {
+        this.templateProcessor = templateProcessor;
         this.userService = userService;
-        mesage = DEFAULT_MESAGE;
-        color = DEFAULT_COLOR;
     }
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Map<String, Object> varieabels = new HashMap<>();
-        varieabels.put(MESAGE, mesage);
-        varieabels.put(COLOR, color);
-        resp.getWriter().println(templateProcessor.getPage(TEMPLATE, varieabels));
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        Map<String, Object> variables = new HashMap<>();
+        variables.put(MESSAGE, DEFAULT_MESSAGE);
+        variables.put(COLOR, DEFAULT_COLOR);
+        resp.getWriter().println(templateProcessor.getPage(TEMPLATE, variables));
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String name = req.getParameter("name");
-        String password = req.getParameter("password");
-        String age = req.getParameter("age");
-        String id = req.getParameter("id");
-        List<String> values = new ArrayList<>();
-        values.add(name);
-        values.add(password);
-        values.add(id);
-        values.add(age);
-
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        Map<String, String> values = fillValues(req);
+        Map<String, Object> variables = new HashMap<>();
+        String message;
+        String color;
         if (isFilled(values)) {
-            if (isNumberic(id) && isNumberic(age)) {
-                userService.save(new User(name, password, Integer.parseInt(age), Long.parseLong(id)));
-                mesage = "Add another user";
+            if (isNumeric(values.get("id")) && isNumeric(values.get("age"))) {
+                userService.save(new User(values.get("name"),
+                        values.get("password"),
+                        Integer.parseInt(values.get("age")),
+                        Long.parseLong(values.get("id"))));
+                message = "Add another user";
                 color = "#6A5ACD";
-                doGet(req, resp);
-                mesage = DEFAULT_MESAGE;
-                color = DEFAULT_COLOR;
             } else {
-                mesage = "User has not added! Id and Age must be a number!";
+                message = "User has not added! Id and Age must be a number!";
                 color = "#FFA500";
-                doGet(req, resp);
-                mesage = DEFAULT_MESAGE;
-                color = DEFAULT_COLOR;
             }
         } else {
-            mesage = "User has not added! Fill all fields! ";
+            message = "User has not added! Fill all fields! ";
             color = "#DC143C";
-            doGet(req, resp);
-            mesage = DEFAULT_MESAGE;
-            color = DEFAULT_COLOR;
         }
-
-
+        variables.put(MESSAGE, message);
+        variables.put(COLOR, color);
+        resp.getWriter().println(templateProcessor.getPage(TEMPLATE, variables));
     }
 
-    private boolean isNumberic(String str) {
+    private Map<String, String> fillValues(HttpServletRequest req) {
+        Map<String, String> values = new HashMap<>();
+        values.put("name", req.getParameter("name"));
+        values.put("password", req.getParameter("password"));
+        values.put("age", req.getParameter("age"));
+        values.put("id", req.getParameter("id"));
+        return values;
+    }
+
+    private boolean isNumeric(String str) {
         {
             try {
-                double d = Double.parseDouble(str);
+                Double.parseDouble(str);
             } catch (NumberFormatException nfe) {
                 return false;
             }
@@ -90,9 +82,9 @@ public class AddUpdateServlet extends HttpServlet {
         }
     }
 
-    private boolean isFilled(List<String> values) {
+    private boolean isFilled(Map<String, String> values) {
         boolean isFilled = true;
-        for (String value : values) {
+        for (String value : values.values()) {
             if (value.length() == 0) {
                 isFilled = false;
             }

@@ -25,10 +25,9 @@ public class LoginServlet extends HttpServlet {
     private final UserService service;
     private final TemplateProcessor templateProcessor;
 
-
-    public LoginServlet(UserService service) {
+    public LoginServlet(UserService service, TemplateProcessor templateProcessor) {
         this.service = service;
-        templateProcessor = new TemplateProcessor();
+        this.templateProcessor = templateProcessor;
     }
 
     @Override
@@ -63,8 +62,7 @@ public class LoginServlet extends HttpServlet {
         Map<String,Object> variables = new HashMap<>();
         variables.put(STATUS,status);
         variables.put(COLOR,color);
-        /*//variables.put(RESENT_LOGIN, DEFAULT);
-        resp.setContentType("text/json;charset=utf-8");*/
+
         resp.getWriter().println(templateProcessor.getPage(TEMPLATE,variables));
     }
 }

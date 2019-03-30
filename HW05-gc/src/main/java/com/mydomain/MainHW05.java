@@ -24,8 +24,8 @@ public class MainHW05 {
         Benchmark mbean = new Benchmark(100_000);
         mbs.registerMBean(mbean, name);
         //mbean.run(10_000);
-        mbean.run(100_000);
-        //mbean.run(10_000_000);//out of memory
+        //mbean.run(100_000);
+        mbean.run(10_000_000);//out of memory
 
         System.out.println("time: " + (System.currentTimeMillis() - beginTime)/1000);
     }

@@ -19,39 +19,19 @@ public class ShowServlet extends HttpServlet {
     private final UserService service;
     private final TemplateProcessor templateProcessor;
 
-    public ShowServlet(UserService service) {
+    public ShowServlet(UserService service, TemplateProcessor templateProcessor) {
         this.service = service;
-        templateProcessor  = new TemplateProcessor();
+        this.templateProcessor = templateProcessor;
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         List<User> users = service.loadAll();
-        String table = bulidTable(users);
 
-        Map<String,Object> variables = new HashMap<>();
-        variables.put(TABLE,table);
+        Map<String, Object> variables = new HashMap<>();
+        variables.put(TABLE, users);
 
-        resp.getWriter().println(templateProcessor.getPage(TEMPLATE,variables));
+        resp.getWriter().println(templateProcessor.getPage(TEMPLATE, variables));
     }
 
-    private String bulidTable(List<User> users) {
-        StringBuilder stringBuilder = new StringBuilder("<table border = 3px>");
-        stringBuilder.append("<tr><h2><b><td>NAME</td><td>ID</td><td>AGE</td></b></h2>");
-        for (User user : users) {
-            stringBuilder.append("<tr>");
-            stringBuilder.append("<td>");
-            stringBuilder.append(user.getName());
-            stringBuilder.append("</td>");
-            stringBuilder.append("<td>");
-            stringBuilder.append(user.getId());
-            stringBuilder.append("</td>");
-            stringBuilder.append("<td>");
-            stringBuilder.append(user.getAge());
-            stringBuilder.append("</td>");
-            stringBuilder.append("</tr>");
-        }
-        stringBuilder.append("</table>");
-        return stringBuilder.toString();
-    }
 }
