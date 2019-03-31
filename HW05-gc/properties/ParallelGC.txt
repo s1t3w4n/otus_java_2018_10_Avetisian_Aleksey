@@ -1,5 +1,5 @@
 -Xms128m -Xmx128m -verbose:gc
--Xloggc:./HomeWork05/log/PGC_log
+-Xloggc:./HW05-gc/gclog/PGC_log
 -XX:+HeapDumpOnOutOfMemoryError
--XX:HeapDumpPath=./HomeWork05/dump/PGC_dump
+-XX:HeapDumpPath=./HW05-gc/dump/PGC_dump
 -XX:+UseParallelGC

@@ -1,0 +1,5 @@
+-Xms128m -Xmx128m -verbose:gc
+-Xloggc:./HW05-gc/gclog/CMSGC_log
+-XX:+HeapDumpOnOutOfMemoryError
+-XX:HeapDumpPath=./HW05-gc/dump/CMSGC_dump
+-XX:+UseConcMarkSweepGC

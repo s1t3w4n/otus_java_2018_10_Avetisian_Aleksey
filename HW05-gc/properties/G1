@@ -1,5 +1,0 @@
--Xms128m -Xmx128m -verbose:gc
--Xloggc:./HomeWork05/log/G1_log
--XX:+HeapDumpOnOutOfMemoryError
--XX:HeapDumpPath=./HomeWork05/dump/G1_dump
--XX:+UseG1GC
