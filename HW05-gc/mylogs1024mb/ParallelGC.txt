@@ -1,0 +1,8 @@
+00:43:26.470 [main] INFO  MainHW05 - Starting the program...
+00:43:44.989 [main] INFO  MainHW05 - Garbage collector monitoring
+00:43:44.991 [main] INFO  MainHW05 - Memory manager: PS Scavenge
+00:43:44.994 [main] INFO  MainHW05 - Time used: 3seconds
+00:43:44.994 [main] INFO  MainHW05 - Count: 3
+00:43:44.995 [main] INFO  MainHW05 - Memory manager: PS MarkSweep
+00:43:44.996 [main] INFO  MainHW05 - Time used: 12seconds
+00:43:44.996 [main] INFO  MainHW05 - Count: 1

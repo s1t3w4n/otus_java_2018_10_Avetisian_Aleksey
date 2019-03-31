@@ -1,0 +1,8 @@
+00:44:27.676 [main] INFO  MainHW05 - Starting the program...
+00:44:32.076 [main] INFO  MainHW05 - Garbage collector monitoring
+00:44:32.078 [main] INFO  MainHW05 - Memory manager: Copy
+00:44:32.079 [main] INFO  MainHW05 - Time used: 3seconds
+00:44:32.079 [main] INFO  MainHW05 - Count: 3
+00:44:32.080 [main] INFO  MainHW05 - Memory manager: MarkSweepCompact
+00:44:32.081 [main] INFO  MainHW05 - Time used: 0seconds
+00:44:32.082 [main] INFO  MainHW05 - Count: 0

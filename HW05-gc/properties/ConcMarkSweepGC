@@ -1,5 +1,0 @@
--Xms128m -Xmx128m -verbose:gc
--Xloggc:./HomeWork05/log/CMSGC_log
--XX:+HeapDumpOnOutOfMemoryError
--XX:HeapDumpPath=./HomeWork05/dump/CMSGC_dump
--XX:+UseConcMarkSweepGC

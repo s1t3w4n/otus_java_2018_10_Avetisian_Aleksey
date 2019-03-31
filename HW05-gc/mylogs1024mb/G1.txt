@@ -1,0 +1,8 @@
+00:42:03.038 [main] INFO  MainHW05 - Starting the program...
+00:42:10.532 [main] INFO  MainHW05 - Garbage collector monitoring
+00:42:10.533 [main] INFO  MainHW05 - Memory manager: G1 Young Generation
+00:42:10.534 [main] INFO  MainHW05 - Time used: 3seconds
+00:42:10.536 [main] INFO  MainHW05 - Count: 10
+00:42:10.537 [main] INFO  MainHW05 - Memory manager: G1 Old Generation
+00:42:10.537 [main] INFO  MainHW05 - Time used: 0seconds
+00:42:10.538 [main] INFO  MainHW05 - Count: 0
