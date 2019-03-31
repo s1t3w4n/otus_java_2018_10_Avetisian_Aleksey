@@ -10,7 +10,7 @@ public class Benchmark implements BenchmarkMBean {
         this.count = count;
     }
 
-    public void run(int size) throws InterruptedException {
+    public void run(int size)  {
         for (int i = 0; i < count; i++) {
             List<Integer> list = new ArrayList<>();
             for (int j = 0; j < size; j++) {

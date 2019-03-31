@@ -14,13 +14,13 @@ import service.UserServiceImpl;
 import servlets.*;
 
 
-public class MyResources {
+public class JettyServerWrapper {
     private final static int PORT = 8080;
     private final static String PUBLIC_HTML = "/static";
     private final UserService service;
     private final TemplateProcessor templateProcessor;
 
-    public MyResources() {
+    public JettyServerWrapper() {
         service = addDBService();
         templateProcessor = new TemplateProcessor();
     }
