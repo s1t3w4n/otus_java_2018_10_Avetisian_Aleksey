@@ -1,0 +1,50 @@
+19:03:03.262 [main] INFO  MainHW05 - Starting the program...
+19:04:03.387 [main] INFO  MainHW05 - Time of work:60
+19:04:03.388 [main] INFO  MainHW05 - ===============Garbage collector monitoring===============
+19:04:03.388 [main] INFO  MainHW05 - Memory manager: PS Scavenge
+19:04:03.389 [main] INFO  MainHW05 - Time used: 10seconds
+19:04:03.389 [main] INFO  MainHW05 - Count: 39
+19:04:03.389 [main] INFO  MainHW05 - Memory manager: PS MarkSweep
+19:04:03.389 [main] INFO  MainHW05 - Time used: 39seconds
+19:04:03.390 [main] INFO  MainHW05 - Count: 12
+19:05:04.159 [main] INFO  MainHW05 - Time of work:120
+19:05:04.159 [main] INFO  MainHW05 - ===============Garbage collector monitoring===============
+19:05:04.161 [main] INFO  MainHW05 - Memory manager: PS Scavenge
+19:05:04.161 [main] INFO  MainHW05 - Time used: 22seconds
+19:05:04.161 [main] INFO  MainHW05 - Count: 89
+19:05:04.162 [main] INFO  MainHW05 - Memory manager: PS MarkSweep
+19:05:04.163 [main] INFO  MainHW05 - Time used: 77seconds
+19:05:04.163 [main] INFO  MainHW05 - Count: 24
+19:06:04.160 [main] INFO  MainHW05 - Time of work:180
+19:06:04.160 [main] INFO  MainHW05 - ===============Garbage collector monitoring===============
+19:06:04.160 [main] INFO  MainHW05 - Memory manager: PS Scavenge
+19:06:04.161 [main] INFO  MainHW05 - Time used: 37seconds
+19:06:04.163 [main] INFO  MainHW05 - Count: 130
+19:06:04.163 [main] INFO  MainHW05 - Memory manager: PS MarkSweep
+19:06:04.164 [main] INFO  MainHW05 - Time used: 111seconds
+19:06:04.164 [main] INFO  MainHW05 - Count: 34
+19:07:04.248 [main] INFO  MainHW05 - Time of work:240
+19:07:04.249 [main] INFO  MainHW05 - ===============Garbage collector monitoring===============
+19:07:04.249 [main] INFO  MainHW05 - Memory manager: PS Scavenge
+19:07:04.249 [main] INFO  MainHW05 - Time used: 52seconds
+19:07:04.249 [main] INFO  MainHW05 - Count: 196
+19:07:04.249 [main] INFO  MainHW05 - Memory manager: PS MarkSweep
+19:07:04.250 [main] INFO  MainHW05 - Time used: 141seconds
+19:07:04.250 [main] INFO  MainHW05 - Count: 46
+19:08:05.778 [main] INFO  MainHW05 - Time of work:302
+19:08:05.779 [main] INFO  MainHW05 - ===============Garbage collector monitoring===============
+19:08:05.780 [main] INFO  MainHW05 - Memory manager: PS Scavenge
+19:08:05.780 [main] INFO  MainHW05 - Time used: 68seconds
+19:08:05.780 [main] INFO  MainHW05 - Count: 261
+19:08:05.780 [main] INFO  MainHW05 - Memory manager: PS MarkSweep
+19:08:05.780 [main] INFO  MainHW05 - Time used: 173seconds
+19:08:05.781 [main] INFO  MainHW05 - Count: 58
+19:08:05.781 [main] INFO  MainHW05 - Last results: 
+19:08:05.781 [main] INFO  MainHW05 - ===============Garbage collector monitoring===============
+19:08:05.781 [main] INFO  MainHW05 - Memory manager: PS Scavenge
+19:08:05.782 [main] INFO  MainHW05 - Time used: 68seconds
+19:08:05.782 [main] INFO  MainHW05 - Count: 261
+19:08:05.783 [main] INFO  MainHW05 - Memory manager: PS MarkSweep
+19:08:05.784 [main] INFO  MainHW05 - Time used: 173seconds
+19:08:05.785 [main] INFO  MainHW05 - Count: 58
+19:08:05.785 [main] INFO  MainHW05 - Ending the program...

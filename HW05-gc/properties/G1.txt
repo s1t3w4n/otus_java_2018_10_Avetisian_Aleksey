@@ -1,4 +1,4 @@
--Xms128m -Xmx128m -verbose:gc
+-Xms512m -Xmx512m -verbose:gc
 -Xloggc:./HW05-gc/gclog/G1_log
 -XX:+HeapDumpOnOutOfMemoryError
 -XX:HeapDumpPath=./HW05-gc/dump/G1_dump

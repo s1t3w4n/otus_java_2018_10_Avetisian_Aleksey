@@ -1,8 +1,0 @@
-00:40:08.973 [main] INFO  MainHW05 - Starting the program...
-00:40:16.943 [main] INFO  MainHW05 - Garbage collector monitoring
-00:40:18.353 [main] INFO  MainHW05 - Memory manager: ParNew
-00:40:21.044 [main] INFO  MainHW05 - Time used: 5seconds
-00:40:21.053 [main] INFO  MainHW05 - Count: 6
-00:40:21.053 [main] INFO  MainHW05 - Memory manager: ConcurrentMarkSweep
-00:40:21.054 [main] INFO  MainHW05 - Time used: 1seconds
-00:40:21.054 [main] INFO  MainHW05 - Count: 1

@@ -1,0 +1,41 @@
+18:48:47.158 [main] INFO  MainHW05 - Starting the program...
+18:49:47.784 [main] INFO  MainHW05 - Time of work:60
+18:49:47.786 [main] INFO  MainHW05 - ===============Garbage collector monitoring===============
+18:49:47.786 [main] INFO  MainHW05 - Memory manager: ParNew
+18:49:47.787 [main] INFO  MainHW05 - Time used: 20seconds
+18:49:47.787 [main] INFO  MainHW05 - Count: 40
+18:49:47.787 [main] INFO  MainHW05 - Memory manager: ConcurrentMarkSweep
+18:49:47.787 [main] INFO  MainHW05 - Time used: 20seconds
+18:49:47.787 [main] INFO  MainHW05 - Count: 27
+18:50:47.888 [main] INFO  MainHW05 - Time of work:120
+18:50:47.889 [main] INFO  MainHW05 - ===============Garbage collector monitoring===============
+18:50:47.889 [main] INFO  MainHW05 - Memory manager: ParNew
+18:50:47.890 [main] INFO  MainHW05 - Time used: 39seconds
+18:50:47.890 [main] INFO  MainHW05 - Count: 80
+18:50:47.890 [main] INFO  MainHW05 - Memory manager: ConcurrentMarkSweep
+18:50:47.890 [main] INFO  MainHW05 - Time used: 42seconds
+18:50:47.890 [main] INFO  MainHW05 - Count: 58
+18:51:48.240 [main] INFO  MainHW05 - Time of work:181
+18:51:48.241 [main] INFO  MainHW05 - ===============Garbage collector monitoring===============
+18:51:48.241 [main] INFO  MainHW05 - Memory manager: ParNew
+18:51:48.243 [main] INFO  MainHW05 - Time used: 59seconds
+18:51:48.243 [main] INFO  MainHW05 - Count: 120
+18:51:48.244 [main] INFO  MainHW05 - Memory manager: ConcurrentMarkSweep
+18:51:48.244 [main] INFO  MainHW05 - Time used: 64seconds
+18:51:48.244 [main] INFO  MainHW05 - Count: 87
+18:52:49.816 [main] INFO  MainHW05 - Time of work:242
+18:52:49.817 [main] INFO  MainHW05 - ===============Garbage collector monitoring===============
+18:52:49.817 [main] INFO  MainHW05 - Memory manager: ParNew
+18:52:49.818 [main] INFO  MainHW05 - Time used: 79seconds
+18:52:49.818 [main] INFO  MainHW05 - Count: 162
+18:52:49.818 [main] INFO  MainHW05 - Memory manager: ConcurrentMarkSweep
+18:52:49.818 [main] INFO  MainHW05 - Time used: 86seconds
+18:52:49.818 [main] INFO  MainHW05 - Count: 118
+18:53:47.164 [main] INFO  MainHW05 - Last results: 
+18:53:47.165 [main] INFO  MainHW05 - ===============Garbage collector monitoring===============
+18:53:47.165 [main] INFO  MainHW05 - Memory manager: ParNew
+18:53:47.165 [main] INFO  MainHW05 - Time used: 97seconds
+18:53:47.165 [main] INFO  MainHW05 - Count: 200
+18:53:47.166 [main] INFO  MainHW05 - Memory manager: ConcurrentMarkSweep
+18:53:47.166 [main] INFO  MainHW05 - Time used: 107seconds
+18:53:47.166 [main] INFO  MainHW05 - Count: 146

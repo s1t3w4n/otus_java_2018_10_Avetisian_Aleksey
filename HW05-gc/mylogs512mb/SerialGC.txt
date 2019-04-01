@@ -1,0 +1,43 @@
+19:09:21.267 [main] INFO  MainHW05 - Starting the program...
+19:10:21.536 [main] INFO  MainHW05 - Time of work:60
+19:10:21.537 [main] INFO  MainHW05 - ===============Garbage collector monitoring===============
+19:10:21.537 [main] INFO  MainHW05 - Memory manager: Copy
+19:10:21.537 [main] INFO  MainHW05 - Time used: 18seconds
+19:10:21.538 [main] INFO  MainHW05 - Count: 58
+19:10:21.538 [main] INFO  MainHW05 - Memory manager: MarkSweepCompact
+19:10:21.538 [main] INFO  MainHW05 - Time used: 12seconds
+19:10:21.538 [main] INFO  MainHW05 - Count: 17
+19:11:21.537 [main] INFO  MainHW05 - Time of work:120
+19:11:21.537 [main] INFO  MainHW05 - ===============Garbage collector monitoring===============
+19:11:21.538 [main] INFO  MainHW05 - Memory manager: Copy
+19:11:21.539 [main] INFO  MainHW05 - Time used: 37seconds
+19:11:21.539 [main] INFO  MainHW05 - Count: 114
+19:11:21.539 [main] INFO  MainHW05 - Memory manager: MarkSweepCompact
+19:11:21.540 [main] INFO  MainHW05 - Time used: 22seconds
+19:11:21.540 [main] INFO  MainHW05 - Count: 35
+19:12:21.919 [main] INFO  MainHW05 - Time of work:180
+19:12:21.920 [main] INFO  MainHW05 - ===============Garbage collector monitoring===============
+19:12:21.920 [main] INFO  MainHW05 - Memory manager: Copy
+19:12:21.920 [main] INFO  MainHW05 - Time used: 56seconds
+19:12:21.920 [main] INFO  MainHW05 - Count: 174
+19:12:21.920 [main] INFO  MainHW05 - Memory manager: MarkSweepCompact
+19:12:21.920 [main] INFO  MainHW05 - Time used: 36seconds
+19:12:21.921 [main] INFO  MainHW05 - Count: 54
+19:13:22.166 [main] INFO  MainHW05 - Time of work:240
+19:13:22.167 [main] INFO  MainHW05 - ===============Garbage collector monitoring===============
+19:13:22.167 [main] INFO  MainHW05 - Memory manager: Copy
+19:13:22.168 [main] INFO  MainHW05 - Time used: 76seconds
+19:13:22.169 [main] INFO  MainHW05 - Count: 236
+19:13:22.169 [main] INFO  MainHW05 - Memory manager: MarkSweepCompact
+19:13:22.169 [main] INFO  MainHW05 - Time used: 46seconds
+19:13:22.169 [main] INFO  MainHW05 - Count: 72
+19:14:21.275 [main] INFO  MainHW05 - Time of work: 5 min
+19:14:21.275 [main] INFO  MainHW05 - Last results: 
+19:14:21.275 [main] INFO  MainHW05 - ===============Garbage collector monitoring===============
+19:14:21.275 [main] INFO  MainHW05 - Memory manager: Copy
+19:14:21.276 [main] INFO  MainHW05 - Time used: 94seconds
+19:14:21.276 [main] INFO  MainHW05 - Count: 290
+19:14:21.276 [main] INFO  MainHW05 - Memory manager: MarkSweepCompact
+19:14:21.276 [main] INFO  MainHW05 - Time used: 59seconds
+19:14:21.276 [main] INFO  MainHW05 - Count: 90
+19:14:21.276 [main] INFO  MainHW05 - Ending the program...

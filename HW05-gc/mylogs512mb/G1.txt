@@ -1,0 +1,42 @@
+18:56:55.412 [main] INFO  MainHW05 - Starting the program...
+18:57:55.424 [main] INFO  MainHW05 - Time of work:60
+18:57:55.425 [main] INFO  MainHW05 - ===============Garbage collector monitoring===============
+18:57:55.426 [main] INFO  MainHW05 - Memory manager: G1 Young Generation
+18:57:55.426 [main] INFO  MainHW05 - Time used: 25seconds
+18:57:55.426 [main] INFO  MainHW05 - Count: 151
+18:57:55.426 [main] INFO  MainHW05 - Memory manager: G1 Old Generation
+18:57:55.427 [main] INFO  MainHW05 - Time used: 6seconds
+18:57:55.427 [main] INFO  MainHW05 - Count: 4
+18:58:55.429 [main] INFO  MainHW05 - Time of work:120
+18:58:55.431 [main] INFO  MainHW05 - ===============Garbage collector monitoring===============
+18:58:55.432 [main] INFO  MainHW05 - Memory manager: G1 Young Generation
+18:58:55.432 [main] INFO  MainHW05 - Time used: 50seconds
+18:58:55.432 [main] INFO  MainHW05 - Count: 281
+18:58:55.433 [main] INFO  MainHW05 - Memory manager: G1 Old Generation
+18:58:55.433 [main] INFO  MainHW05 - Time used: 20seconds
+18:58:55.433 [main] INFO  MainHW05 - Count: 13
+18:59:55.573 [main] INFO  MainHW05 - Time of work:180
+18:59:55.576 [main] INFO  MainHW05 - ===============Garbage collector monitoring===============
+18:59:55.577 [main] INFO  MainHW05 - Memory manager: G1 Young Generation
+18:59:55.577 [main] INFO  MainHW05 - Time used: 76seconds
+18:59:55.586 [main] INFO  MainHW05 - Count: 421
+18:59:55.586 [main] INFO  MainHW05 - Memory manager: G1 Old Generation
+18:59:55.587 [main] INFO  MainHW05 - Time used: 33seconds
+18:59:55.587 [main] INFO  MainHW05 - Count: 21
+19:00:55.667 [main] INFO  MainHW05 - Time of work:240
+19:00:55.668 [main] INFO  MainHW05 - ===============Garbage collector monitoring===============
+19:00:55.669 [main] INFO  MainHW05 - Memory manager: G1 Young Generation
+19:00:55.669 [main] INFO  MainHW05 - Time used: 100seconds
+19:00:55.670 [main] INFO  MainHW05 - Count: 548
+19:00:55.671 [main] INFO  MainHW05 - Memory manager: G1 Old Generation
+19:00:55.671 [main] INFO  MainHW05 - Time used: 44seconds
+19:00:55.671 [main] INFO  MainHW05 - Count: 28
+19:01:55.431 [main] INFO  MainHW05 - Last results: 
+19:01:55.432 [main] INFO  MainHW05 - ===============Garbage collector monitoring===============
+19:01:55.433 [main] INFO  MainHW05 - Memory manager: G1 Young Generation
+19:01:55.434 [main] INFO  MainHW05 - Time used: 126seconds
+19:01:55.434 [main] INFO  MainHW05 - Count: 695
+19:01:55.434 [main] INFO  MainHW05 - Memory manager: G1 Old Generation
+19:01:55.435 [main] INFO  MainHW05 - Time used: 55seconds
+19:01:55.451 [main] INFO  MainHW05 - Count: 35
+19:01:55.451 [main] INFO  MainHW05 - Ending the program...
