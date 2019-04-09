@@ -3,8 +3,8 @@ import org.slf4j.LoggerFactory;
 
 public class MainHW13 {
     private static final Logger LOGGER = LoggerFactory.getLogger(MainHW13.class);
-    private boolean isPrinted = false;
-    private boolean isReverseOrder = false;
+    private volatile boolean isPrinted = false;
+    private volatile boolean isReverseOrder = false;
 
 
     public static void main(String[] args) {
@@ -17,42 +17,43 @@ public class MainHW13 {
     private synchronized void action() {
         while (true) {
             if (isReverseOrder) {
-                reverseCount();
+                counter(Order.REVERSE);
             } else {
-                normalCount();
+                counter(Order.NORMAL);
             }
         }
     }
 
-    private void normalCount() {
-        for (int i = 1; i <= 10; i++) {
-            print(i);
-            if (i == 10) {
-                isReverseOrder = true;
+    private void counter(Order order) {
+        if (order.equals(Order.NORMAL)) {
+            for (int i = 1; i <= 10; i++) {
+                print(i);
+                if (i == 10) {
+                    isReverseOrder = true;
+                }
+            }
+        } else if(order.equals(Order.REVERSE)) {
+            for (int i = 9; i > 1; i--) {
+                print(i);
+                if (i == 2) {
+                    isReverseOrder = false;
+                }
             }
         }
     }
 
-    private void reverseCount() {
-        for (int i = 9; i > 1; i--) {
-            print(i);
-            if (i == 2) {
-                isReverseOrder = false;
-            }
-        }
-    }
-
-
-    private void print(int i) {
+    private synchronized void print(int i) {
         if (isPrinted) {
             LOGGER.info(Integer.toString(i));
             sleep(1_000);
             isPrinted = false;
             notify();
+            wait(this);
         } else {
             LOGGER.info(Integer.toString(i));
             sleep(1_000);
             isPrinted = true;
+            notify();
             wait(this);
         }
     }
@@ -70,6 +71,20 @@ public class MainHW13 {
             Thread.sleep(millis);
         } catch (InterruptedException e) {
             LOGGER.error(e.getMessage());
+        }
+    }
+
+    private enum Order {
+        NORMAL(1),
+        REVERSE(-1);
+        private final int value;
+
+        Order(int value) {
+            this.value = value;
+        }
+
+        public int getValue() {
+            return value;
         }
     }
 }
