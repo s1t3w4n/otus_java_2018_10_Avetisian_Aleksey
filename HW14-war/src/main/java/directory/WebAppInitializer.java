@@ -1,3 +1,5 @@
+package directory;
+
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
@@ -26,4 +28,5 @@ public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServlet
         encodingFilter.setForceEncoding(true);
         return new Filter[]{encodingFilter};
     }
+
 }
