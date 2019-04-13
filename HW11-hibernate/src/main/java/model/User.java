@@ -33,6 +33,10 @@ public class User implements Serializable {
         phones = new ArrayList<>();
     }
 
+    public void setId(long id) {
+        this.id = id;
+    }
+
     public String getPassword() {
         return password;
     }
@@ -81,19 +85,19 @@ public class User implements Serializable {
         this.phones = phones;
     }
 
-    @Override
-    public String toString() {
-        StringBuilder stringBuilder = new StringBuilder(this.getClass().getSimpleName());
-        stringBuilder.append(" id :");
-        stringBuilder.append(id + "; ");
-        stringBuilder.append("Password :");
-        stringBuilder.append(password + "; ");
-        stringBuilder.append("Name :");
-        stringBuilder.append(name + "; ");
-        stringBuilder.append("Age :");
-        stringBuilder.append(age + "; ");
-        stringBuilder.append(getAddress());
-        phones.forEach(phone -> stringBuilder.append(phone.toString()));
-        return stringBuilder.toString();
-    }
+//    @Override
+//    public String toString() {
+//        StringBuilder stringBuilder = new StringBuilder(this.getClass().getSimpleName());
+//        stringBuilder.append(" id :");
+//        stringBuilder.append(id + "; ");
+//        stringBuilder.append("Password :");
+//        stringBuilder.append(password + "; ");
+//        stringBuilder.append("Name :");
+//        stringBuilder.append(name + "; ");
+//        stringBuilder.append("Age :");
+//        stringBuilder.append(age + "; ");
+//        stringBuilder.append(getAddress());
+//        phones.forEach(phone -> stringBuilder.append(phone.toString()));
+//        return stringBuilder.toString();
+//    }
 }

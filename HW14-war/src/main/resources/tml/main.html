@@ -1,4 +1,4 @@
-<html xmlns="http://www.w3.org/1999/xhtml" content="text/html;">
+<html xmlns:th="http://www.w3.org/1999/xhtml" content="text/html;">
 <head>
     <meta charset="UTF-8">
     <title>Main</title>
@@ -8,7 +8,7 @@
 <center>
     <h1><p><a href="login">Login</a>|<a href="admin">Admin</a></p></h1>
     <img src="../static/OTUS.png">
-    <h1><p>Hello <u>${name}!</u></p></h1>
+    <h1><p>Hello <u th:text="${name}"></u>!</p></h1>
 </center>
 
 </body>

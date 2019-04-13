@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add User</title>
+    <style>
+        table {
+            margin: auto;
+            border-collapse: collapse;
+        }
+
+        .left td {
+            text-align: left;
+        }
+
+        .right td {
+            text-align: right;
+            vertical-align: center;
+        }
+    </style>
+</head>
+<body>
+<p align="center"><a href="main">Main</a>|<a href="admin">Admin</a>|<a href="show">SHOW</a></p>
+<form th:action="@{/add}" th:object="${user}" th:method="post" accept-charset="utf-8">
+
+    <table>
+        <tr>
+            <td class="left">
+                <label for="name-field">NAME</label>
+            </td>
+            <td class="right">
+                <input type="text" th:name="name" id="name-field" th:value="${user.name}">
+            </td>
+        </tr>
+        <tr>
+            <td class="left">
+                <label for="password-field">PASSWORD</label>
+            </td>
+            <td class="right">
+                <input type="text" th:name="password" id="password-field" th:value="${user.password}">
+            </td>
+        </tr>
+        <tr>
+            <td class="left">
+                <label for="age-field">AGE</label>
+            </td>
+            <td class="right">
+                <input type="text" th:name="age" id="age-field" th:value="${user.age}">
+            </td>
+        </tr>
+        <tr>
+            <td class="left">
+                <label for="id-field">ID</label>
+            </td>
+            <td class="right">
+                <input type="text" th:name="id" id="id-field" th:value="${user.id}">
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" align="center">
+                <input type="submit" value="ADD/UPDATE">
+            </td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>
