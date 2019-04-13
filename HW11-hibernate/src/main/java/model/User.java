@@ -4,6 +4,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 public class User implements Serializable {
@@ -16,7 +17,7 @@ public class User implements Serializable {
     @Column(name = "age")
     private int age;
 
-    @OneToOne(mappedBy = "user",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Address address;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -25,7 +26,7 @@ public class User implements Serializable {
     public User() {
     }
 
-    public User(String name,String password, int age, long id) {
+    public User(String name, String password, int age, long id) {
         this.name = name;
         this.password = password;
         this.age = age;
@@ -85,19 +86,21 @@ public class User implements Serializable {
         this.phones = phones;
     }
 
-//    @Override
-//    public String toString() {
-//        StringBuilder stringBuilder = new StringBuilder(this.getClass().getSimpleName());
-//        stringBuilder.append(" id :");
-//        stringBuilder.append(id + "; ");
-//        stringBuilder.append("Password :");
-//        stringBuilder.append(password + "; ");
-//        stringBuilder.append("Name :");
-//        stringBuilder.append(name + "; ");
-//        stringBuilder.append("Age :");
-//        stringBuilder.append(age + "; ");
-//        stringBuilder.append(getAddress());
-//        phones.forEach(phone -> stringBuilder.append(phone.toString()));
-//        return stringBuilder.toString();
-//    }
+    @Override
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder(this.getClass().getSimpleName());
+        stringBuilder.append(" id :");
+        stringBuilder.append(id + "; ");
+        stringBuilder.append("Password :");
+        stringBuilder.append(password + "; ");
+        stringBuilder.append("Name :");
+        stringBuilder.append(name + "; ");
+        stringBuilder.append("Age :");
+        stringBuilder.append(age + "; ");
+        stringBuilder.append(getAddress());
+        if (Objects.nonNull(phones)) {
+            phones.forEach(phone -> stringBuilder.append(phone.toString()));
+        }
+        return stringBuilder.toString();
+    }
 }

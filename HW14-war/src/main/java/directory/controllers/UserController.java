@@ -23,9 +23,10 @@ public class UserController {
     }
 
     @GetMapping("/login")
-    public String loginPage(){
+    public String loginPage() {
         return "login.html";
     }
+
     @PostMapping("/login")
     public RedirectView authorization(HttpServletRequest request) {
         String id = request.getParameter("id");
@@ -45,7 +46,7 @@ public class UserController {
 
     @GetMapping("/admin")
     public RedirectView admin() {
-        return new RedirectView("/show");
+        return new RedirectView("/show", true);
     }
 
     @GetMapping("/add")
