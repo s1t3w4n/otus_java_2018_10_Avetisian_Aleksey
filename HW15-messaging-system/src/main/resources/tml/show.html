@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Show</title>
+    <style>
+        table {
+            margin: auto;
+            border-collapse: collapse;
+        }
+    </style>
+</head>
+<body>
+<p align="center"><a href="main">Main</a>|<a href="admin">Admin</a>|<a href="add">ADD</a></p>
+
+<table border="3px">
+    <tr>
+        <h2><b>
+            <td>ID</td>
+            <td>NAME</td>
+            <td>AGE</td>
+        </b></h2>
+    <#list table as user>
+        <tr>
+            <td>${user.id}</td>
+            <td>${user.name}</td>
+            <td>${user.age}</td>
+        </tr>
+    </#list>
+</table>
+</body>
+</html>

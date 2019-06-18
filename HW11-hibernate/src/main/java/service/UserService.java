@@ -11,5 +11,5 @@ public interface UserService {
 
     User load(long id);
 
-    public List<User> loadAll();
+    List<User> loadAll();
 }

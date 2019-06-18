@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add User</title>
+    <style>
+        table {
+            margin: auto;
+            border-collapse: collapse;
+        }
+
+        .left td {
+            text-align: left;
+        }
+
+        .right td {
+            text-align: right;
+            vertical-align: center;
+        }
+
+    </style>
+</head>
+<body>
+<p align="center"><a href="main">Main</a>|<a href="admin">Admin</a>|<a href="show">SHOW</a></p>
+<form action="/add" method="post">
+
+    <table>
+        <tr>
+            <td class="left">
+                <label for="name-field">NAME</label>
+            </td>
+            <td class="right">
+                <input type="text" name="name" id="name-field">
+            </td>
+        </tr>
+        <tr>
+            <td class="left">
+                <label for="password-field">PASSWORD</label>
+            </td>
+            <td class="right">
+                <input type="text" name="password" id="password-field">
+            </td>
+        </tr>
+        <tr>
+            <td class="left">
+                <label for="age-field">AGE</label>
+            </td>
+            <td class="right">
+                <input type="text" name="age" id="age-field">
+
+            </td>
+        </tr>
+        <tr>
+            <td class="left">
+                <label for="id-field">ID</label>
+            </td>
+            <td class="right">
+                <input type="text" name="id" id="id-field">
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" align="center">
+                <input type="submit" value="ADD/UPDATE">
+            </td>
+        </tr>
+    </table>
+</form>
+<p align="center" style="color:${color}">${message} </p>
+
+</body>
+</html>
