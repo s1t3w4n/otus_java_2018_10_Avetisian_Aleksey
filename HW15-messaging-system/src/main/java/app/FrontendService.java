@@ -1,26 +1,17 @@
 package app;
 
 
+import app.frontend.websockets.MyWebSocket;
 import messageSystem.Addressee;
-import model.User;
 
-import java.util.List;
-
-/**
- * Created by tully.
- */
 public interface FrontendService extends Addressee {
     void init();
 
-    User handleLoginRequest(String id, String password);
+    Integer handleRequest(MyWebSocket myWebSocket);
 
-    void login(User user);
+    MyWebSocket sendResponse(Integer id);
 
-    List<User> handleShowRequest();
-
-    void show(List<User> users);
-
-    void add(User user);
+    MessageSystemContext getContext();
 
 }
 

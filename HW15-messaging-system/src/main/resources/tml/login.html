@@ -9,8 +9,31 @@
             border-collapse: collapse;
         }
     </style>
+    <script>
+        var ws = new WebSocket("ws://localhost:8080/login");
+        var name = "Guest";
+        function postToServer() {
+
+            var data = {
+                id: document.getElementById("login-field").value,
+                password: document.getElementById("password-field").value
+            };
+            ws.send(JSON.stringify(data));
+        }
+        ws.onmessage = function (message) {
+            name = message;
+            document
+            printName();
+        }
+        function closeConnect() {
+            ws.close();
+        }
+        function printName() {
+            document.getElementById("name").textContent = name;
+        }
+    </script>
 </head>
-<body>
+<body onload="printName()">
 <p align="center"><a href="main">Main</a>|<a href="admin">Admin</a>
 <form action="/login" method="post">
     <table>
@@ -32,13 +55,14 @@
         </tr>
         <tr>
             <td colspan="2" align="center">
-                <input type="submit" value="LOGIN">
+                <input type="submit" value="LOGIN" onclick="postToServer()">
             </td>
         </tr>
     </table>
 </form>
 </p>
 <p align="center" style="color:${color}">${status} id/password</p>
+<p id="name"></p>
 
 
 </body>

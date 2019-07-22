@@ -1,11 +1,13 @@
 package app.frontend.servlets;
 
 import app.FrontendService;
+import app.frontend.websockets.LoginWebSocket;
 import model.User;
 import org.eclipse.jetty.http.HttpStatus;
+import org.eclipse.jetty.websocket.servlet.WebSocketServlet;
+import org.eclipse.jetty.websocket.servlet.WebSocketServletFactory;
 import resource.TemplateProcessor;
 
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -13,7 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class LoginServlet extends HttpServlet {
+public class LoginServlet extends WebSocketServlet {
 
     private static final String TEMPLATE = "login.html";
     private static final String STATUS = "status";
@@ -22,11 +24,11 @@ public class LoginServlet extends HttpServlet {
     private static final String DEFAULT_COLOR = "blue";
 
     private final TemplateProcessor templateProcessor;
-    private final FrontendService frontendService;
+    private final LoginWebSocket loginWebSocket;
 
     public LoginServlet(TemplateProcessor templateProcessor, FrontendService frontendService) {
-        this.frontendService = frontendService;
         this.templateProcessor = templateProcessor;
+        this.loginWebSocket = new LoginWebSocket(frontendService);
     }
 
     @Override
@@ -44,13 +46,12 @@ public class LoginServlet extends HttpServlet {
         String color = DEFAULT_COLOR;
 
         if (Objects.nonNull(id)) {
-            User user = frontendService.handleLoginRequest(id, password);
-            if (Objects.nonNull(user) && user.getPassword().equals(password)) {
+            if (loginWebSocket.isAuth()) {
                 req.getSession();
-                req.getSession(false).setAttribute("id", user.getId());
-                req.getSession(false).setAttribute("name", user.getName());
-                status = "Valid";
+                req.getSession(false).setAttribute("id", id);
+                //req.getSession(false).setAttribute("name", user.getName());
                 color = "green";
+                status = "Valid";
             } else {
                 resp.setStatus(HttpStatus.FORBIDDEN_403);
                 status = "Invalid";
@@ -63,6 +64,12 @@ public class LoginServlet extends HttpServlet {
         variables.put(COLOR, color);
 
         resp.getWriter().println(templateProcessor.getPage(TEMPLATE, variables));
+    }
+
+    @Override
+    public void configure(WebSocketServletFactory webSocketServletFactory) {
+        webSocketServletFactory.setCreator((servletUpgradeRequest, servletUpgradeResponse)
+                -> loginWebSocket);
     }
 }
 

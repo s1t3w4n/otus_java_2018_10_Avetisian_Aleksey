@@ -17,6 +17,6 @@ public class MsgShowAnswer extends MsgToFrontend {
 
     @Override
     public void exec(FrontendService frontendService) {
-        frontendService.show(users);
+        //frontendService.show(users);
     }
 }

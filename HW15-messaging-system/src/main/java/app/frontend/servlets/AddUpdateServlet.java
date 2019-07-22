@@ -42,25 +42,25 @@ public class AddUpdateServlet extends HttpServlet {
         Map<String, Object> variables = new HashMap<>();
         String message;
         String color;
-        if (isFilled(values)) {
-            if (isNumeric(values.get("id")) && isNumeric(values.get("age"))) {
-                frontendService.add(new User(values.get("name"),
-                        values.get("password"),
-                        Integer.parseInt(values.get("age")),
-                        Long.parseLong(values.get("id"))));
-                message = "Add another user";
-                color = "#6A5ACD";
-            } else {
-                message = "User has not added! Id and Age must be a number!";
-                color = "#FFA500";
-            }
-        } else {
-            message = "User has not added! Fill all fields! ";
-            color = "#DC143C";
-        }
-        variables.put(MESSAGE, message);
-        variables.put(COLOR, color);
-        resp.getWriter().println(templateProcessor.getPage(TEMPLATE, variables));
+//        if (isFilled(values)) {
+//            if (isNumeric(values.get("id")) && isNumeric(values.get("age"))) {
+//                frontendService.add(new User(values.get("name"),
+//                        values.get("password"),
+//                        Integer.parseInt(values.get("age")),
+//                        Long.parseLong(values.get("id"))));
+//                message = "Add another user";
+//                color = "#6A5ACD";
+//            } else {
+//                message = "User has not added! Id and Age must be a number!";
+//                color = "#FFA500";
+//            }
+//        } else {
+//            message = "User has not added! Fill all fields! ";
+//            color = "#DC143C";
+//        }
+//        variables.put(MESSAGE, message);
+//        variables.put(COLOR, color);
+//        resp.getWriter().println(templateProcessor.getPage(TEMPLATE, variables));
     }
 
     private Map<String, String> fillValues(HttpServletRequest req) {
