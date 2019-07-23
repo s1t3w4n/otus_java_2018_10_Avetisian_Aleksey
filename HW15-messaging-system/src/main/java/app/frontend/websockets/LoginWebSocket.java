@@ -20,15 +20,10 @@ public class LoginWebSocket implements MyWebSocket {
 
     private final Integer id;
     private final FrontendService frontendService;
-    private boolean isAuth;
 
     public LoginWebSocket(FrontendService frontendService) {
         this.frontendService = frontendService;
         id = frontendService.handleRequest(this);
-    }
-
-    public boolean isAuth() {
-        return isAuth;
     }
 
     @OnWebSocketMessage
@@ -56,9 +51,6 @@ public class LoginWebSocket implements MyWebSocket {
 
     @Override
     public void sendResponseMessage(String message) {
-        if (message.equals("Admin")) {
-            isAuth = true;
-        }
         try {
             session.getRemote().sendString(message);
         } catch (IOException e) {

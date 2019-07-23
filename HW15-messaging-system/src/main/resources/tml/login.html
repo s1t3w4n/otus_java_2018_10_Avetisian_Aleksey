@@ -19,23 +19,22 @@
                 password: document.getElementById("password-field").value
             };
             ws.send(JSON.stringify(data));
+            document.getElementById("login-field").value = "";
+            document.getElementById("password-field").value = "";
         }
         ws.onmessage = function (message) {
-            name = message;
-            document
-            printName();
+            printName(message.data);
         }
         function closeConnect() {
             ws.close();
         }
-        function printName() {
-            document.getElementById("name").textContent = name;
+        function printName(name) {
+            document.getElementById("name").textContent = "Hello " + name + " !";
         }
     </script>
 </head>
-<body onload="printName()">
+<body onload="printName(name)">
 <p align="center"><a href="main">Main</a>|<a href="admin">Admin</a>
-<form action="/login" method="post">
     <table>
         <tr>
             <td>
@@ -59,7 +58,6 @@
             </td>
         </tr>
     </table>
-</form>
 </p>
 <p align="center" style="color:${color}">${status} id/password</p>
 <p id="name"></p>
