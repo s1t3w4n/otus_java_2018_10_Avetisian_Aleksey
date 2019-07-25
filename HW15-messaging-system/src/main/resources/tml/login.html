@@ -23,7 +23,15 @@
             document.getElementById("password-field").value = "";
         }
         ws.onmessage = function (message) {
-            printName(message.data);
+            if (message.data != "invalid") {
+                var json = JSON.parse(message.data);
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', '/login', true);
+                var body = 'id=' + encodeURIComponent(json.id) +
+                    '&name=' + encodeURIComponent(json.name);
+                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                xhr.send(body);
+            }
         }
         function closeConnect() {
             ws.close();

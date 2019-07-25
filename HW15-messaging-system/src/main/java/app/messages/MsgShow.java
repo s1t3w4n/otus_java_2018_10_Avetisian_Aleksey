@@ -6,12 +6,15 @@ import messageSystem.Address;
 
 public class MsgShow extends MsgToDB {
 
-    public MsgShow(Address from, Address to) {
+    private final Integer id;
+
+    public MsgShow(Address from, Address to, Integer id) {
         super(from, to);
+        this.id = id;
     }
 
     @Override
     public void exec(DBService dbService) {
-        dbService.getMS().sendMessage(new MsgShowAnswer(getTo(), getFrom(), dbService.showAll()));
+        dbService.getMS().sendMessage(new MsgShowAnswer(getTo(), getFrom(), id, dbService.showAll()));
     }
 }

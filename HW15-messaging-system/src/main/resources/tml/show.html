@@ -9,24 +9,28 @@
             border-collapse: collapse;
         }
     </style>
+    <script>
+        var ws = new WebSocket("ws://localhost:8080/show");
+
+        ws.onopen = function() {
+            ws.send("a");
+        }
+
+        ws.onmessage = function (message) {
+            var data = JSON.parse(message.data);
+            var table_html = '';
+
+        }
+
+        function closeConnect() {
+            ws.close();
+        }
+    </script>
 </head>
 <body>
 <p align="center"><a href="main">Main</a>|<a href="admin">Admin</a>|<a href="add">ADD</a></p>
+<table id="table" border="3px">
 
-<table border="3px">
-    <tr>
-        <h2><b>
-            <td>ID</td>
-            <td>NAME</td>
-            <td>AGE</td>
-        </b></h2>
-    <#list table as user>
-        <tr>
-            <td>${user.id}</td>
-            <td>${user.name}</td>
-            <td>${user.age}</td>
-        </tr>
-    </#list>
 </table>
 </body>
 </html>

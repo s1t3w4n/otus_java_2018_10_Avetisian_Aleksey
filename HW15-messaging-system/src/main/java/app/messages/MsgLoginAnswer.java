@@ -3,8 +3,11 @@ package app.messages;
 
 import app.FrontendService;
 import app.MsgToFrontend;
+import com.google.gson.Gson;
 import messageSystem.Address;
 import model.User;
+
+import java.util.Objects;
 
 
 public class MsgLoginAnswer extends MsgToFrontend {
@@ -19,6 +22,12 @@ public class MsgLoginAnswer extends MsgToFrontend {
 
     @Override
     public void exec(FrontendService frontendService) {
-        frontendService.sendResponse(id).sendResponseMessage(user.getName());
+        if (Objects.nonNull(user)) {
+            final Gson gson = new Gson();
+            String message = gson.toJson(user);
+            frontendService.sendResponse(id).sendResponseMessage(message);
+        } else {
+            frontendService.sendResponse(id).sendResponseMessage("invalid");
+        }
     }
 }
