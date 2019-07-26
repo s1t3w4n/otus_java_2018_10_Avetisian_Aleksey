@@ -12,14 +12,28 @@
     <script>
         var ws = new WebSocket("ws://localhost:8080/show");
 
-        ws.onopen = function() {
-            ws.send("a");
+        ws.onopen = function () {
+            ws.send('');
         }
 
         ws.onmessage = function (message) {
             var data = JSON.parse(message.data);
-            var table_html = '';
+            var columns = ['ID', 'NAME', 'AGE']
+            //var html_table = '';
 
+            var html_table = '<table border="3px"><tr>';
+            for (var i = 0; i < columns.length; i++) {
+                html_table += '<td><h2><b>' + columns[i] + '</b></h2></td>';
+            }
+            html_table += '</tr>';
+            for (var i = 0; i < data.length; i++) {
+                var row = '<tr><td>' + data[i].id + '</td>>'
+                    + '<td>' + data[i].name + '</td>'
+                    + '<td>' + data[i].age + '</td></tr>';
+                html_table += row;
+            }
+            html_table += '</table>'
+            document.getElementById("table").innerHTML = html_table;
         }
 
         function closeConnect() {
@@ -29,8 +43,6 @@
 </head>
 <body>
 <p align="center"><a href="main">Main</a>|<a href="admin">Admin</a>|<a href="add">ADD</a></p>
-<table id="table" border="3px">
-
-</table>
+<p id="table"></p>
 </body>
 </html>
