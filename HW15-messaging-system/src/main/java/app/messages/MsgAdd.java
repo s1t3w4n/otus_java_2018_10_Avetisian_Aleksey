@@ -7,9 +7,11 @@ import model.User;
 
 public class MsgAdd extends MsgToDB {
     private final User user;
-    public MsgAdd(Address from, Address to, User user) {
+    private final Integer id;
+    public MsgAdd(Address from, Address to, Integer id, User user) {
         super(from, to);
         this.user = user;
+        this.id = id;
     }
 
     @Override

@@ -19,11 +19,30 @@
         }
 
     </style>
+    <script>
+        var ws = new WebSocket("ws://localhost:8080/add");
+
+        function postToServer() {
+            var data = {
+                name: document.getElementById("name-field").value,
+                password: document.getElementById("password-field").value,
+                age: document.getElementById("age-field").value,
+                id: document.getElementById("id-field").value,
+
+            };
+            ws.send(JSON.stringify(data));
+            document.getElementById("name-field").value = "";
+            document.getElementById("password-field").value = "";
+            document.getElementById("age-field").value = "";
+            document.getElementById("id-field").value = "";
+        }
+        function closeConnect() {
+            ws.close();
+        }
+    </script>
 </head>
 <body>
 <p align="center"><a href="main">Main</a>|<a href="admin">Admin</a>|<a href="show">SHOW</a></p>
-<form action="/add" method="post">
-
     <table>
         <tr>
             <td class="left">
@@ -46,7 +65,7 @@
                 <label for="age-field">AGE</label>
             </td>
             <td class="right">
-                <input type="text" name="age" id="age-field">
+                <input type="number" name="age" id="age-field">
 
             </td>
         </tr>
@@ -55,16 +74,15 @@
                 <label for="id-field">ID</label>
             </td>
             <td class="right">
-                <input type="text" name="id" id="id-field">
+                <input type="number" name="id" id="id-field">
             </td>
         </tr>
         <tr>
             <td colspan="2" align="center">
-                <input type="submit" value="ADD/UPDATE">
+                <input type="submit" value="ADD/UPDATE" onclick="postToServer()">
             </td>
         </tr>
     </table>
-</form>
 <p align="center" style="color:${color}">${message} </p>
 
 </body>

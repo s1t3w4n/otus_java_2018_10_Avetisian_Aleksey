@@ -19,15 +19,14 @@
         ws.onmessage = function (message) {
             var data = JSON.parse(message.data);
             var columns = ['ID', 'NAME', 'AGE']
-            //var html_table = '';
 
             var html_table = '<table border="3px"><tr>';
             for (var i = 0; i < columns.length; i++) {
                 html_table += '<td><h2><b>' + columns[i] + '</b></h2></td>';
             }
             html_table += '</tr>';
-            for (var i = 0; i < data.length; i++) {
-                var row = '<tr><td>' + data[i].id + '</td>>'
+            for (i = 0; i < data.length; i++) {
+                var row = '<tr><td>' + data[i].id + '</td>'
                     + '<td>' + data[i].name + '</td>'
                     + '<td>' + data[i].age + '</td></tr>';
                 html_table += row;

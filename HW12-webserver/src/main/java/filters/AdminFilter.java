@@ -11,7 +11,7 @@ import java.util.Objects;
 
 public class AdminFilter implements Filter {
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
+    public void init(FilterConfig filterConfig){
 
     }
 
@@ -23,7 +23,7 @@ public class AdminFilter implements Filter {
         HttpSession session = request.getSession(false);
         if (Objects.nonNull(session)) {
 
-            if (((Long)(session.getAttribute("id"))).equals(1l)) {
+            if (((session.getAttribute("id"))).equals(1L)) {
                 filterChain.doFilter(servletRequest, servletResponse);
             } else {
                 response.setStatus(HttpStatus.FORBIDDEN_403);

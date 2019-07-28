@@ -77,9 +77,9 @@ public class JettyServerWrapper {
     }
 
     private void addFilters(ServletContextHandler context) {
-//        context.addFilter(new FilterHolder(new AdminFilter()), "/admin", null);
-//        context.addFilter(new FilterHolder(new AdminFilter()), "/add", null);
-//        context.addFilter(new FilterHolder(new AdminFilter()), "/show", null);
+        context.addFilter(new FilterHolder(new AdminFilter()), "/admin", null);
+        context.addFilter(new FilterHolder(new AdminFilter()), "/add", null);
+        context.addFilter(new FilterHolder(new AdminFilter()), "/show", null);
     }
 
     private UserService addDBService() {
