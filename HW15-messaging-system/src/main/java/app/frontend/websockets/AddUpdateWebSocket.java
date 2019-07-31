@@ -18,7 +18,7 @@ public class AddUpdateWebSocket implements MyWebSocket {
 
     public AddUpdateWebSocket(   FrontendService frontendService) {
         this.frontendService = frontendService;
-        id = frontendService.handleRequest(this);
+        id = frontendService.registerWebSocket(this);
     }
     @Override
     public void sendResponseMessage(String message) {

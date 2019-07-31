@@ -20,7 +20,7 @@ public class ShowWebSocket implements MyWebSocket {
 
     public ShowWebSocket(   FrontendService frontendService) {
         this.frontendService = frontendService;
-        id = frontendService.handleRequest(this);
+        id = frontendService.registerWebSocket(this);
     }
 
     @OnWebSocketMessage

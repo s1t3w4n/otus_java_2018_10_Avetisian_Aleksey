@@ -1,9 +1,9 @@
 package messageSystem;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -20,9 +20,9 @@ public final class MessageSystem {
     private final Map<Address, Addressee> addresseeMap;
 
     public MessageSystem() {
-        workers = new ArrayList<>();
-        messagesMap = new HashMap<>();
-        addresseeMap = new HashMap<>();
+        workers = new CopyOnWriteArrayList<>();
+        messagesMap = new ConcurrentHashMap<>();
+        addresseeMap = new ConcurrentHashMap<>();
     }
 
     public void addAddressee(Addressee addressee) {
@@ -45,8 +45,8 @@ public final class MessageSystem {
                         try {
                             Message message = queue.take(); //Blocks
                             message.exec(entry.getValue());
-                        } catch (InterruptedException e) {
-                            logger.log(Level.INFO, "Thread interrupted. Finishing: " + name);
+                        } catch (Exception e) {
+                            logger.log(Level.INFO, "Thread failed. Finishing: " + name);
                             return;
                         }
                     }

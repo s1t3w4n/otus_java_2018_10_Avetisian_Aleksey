@@ -15,7 +15,7 @@ public class FrontendServiceImpl implements FrontendService {
     private final Address address;
     private final MessageSystemContext context;
 
-    private static final AtomicInteger ID = new AtomicInteger();
+    private static final AtomicInteger ID_COUNTER = new AtomicInteger();
     private final Map<Integer, MyWebSocket> webSocketMap = new HashMap<>();
 
     public FrontendServiceImpl(MessageSystemContext context, Address address) {
@@ -29,16 +29,15 @@ public class FrontendServiceImpl implements FrontendService {
     }
 
     @Override
-    public Integer handleRequest(MyWebSocket myWebSocket) {
-        int id = ID.incrementAndGet();
+    public int registerWebSocket(MyWebSocket myWebSocket) {
+        int id = ID_COUNTER.incrementAndGet();
         webSocketMap.put(id, myWebSocket);
         return id;
     }
 
     @Override
-    public MyWebSocket sendResponse(Integer id) {
-        return webSocketMap.get(id);
-
+    public void sendResponse(int id, String message) {
+        webSocketMap.get(id).sendResponseMessage(message);
     }
 
     @Override

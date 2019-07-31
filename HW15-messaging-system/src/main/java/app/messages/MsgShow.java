@@ -6,9 +6,9 @@ import messageSystem.Address;
 
 public class MsgShow extends MsgToDB {
 
-    private final Integer id;
+    private final int id;
 
-    public MsgShow(Address from, Address to, Integer id) {
+    public MsgShow(Address from, Address to, int id) {
         super(from, to);
         this.id = id;
     }

@@ -23,7 +23,7 @@ public class LoginWebSocket implements MyWebSocket {
 
     public LoginWebSocket(FrontendService frontendService) {
         this.frontendService = frontendService;
-        id = frontendService.handleRequest(this);
+        id = frontendService.registerWebSocket(this);
     }
 
     @OnWebSocketMessage

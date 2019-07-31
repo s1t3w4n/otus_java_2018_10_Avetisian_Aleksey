@@ -8,11 +8,11 @@ import model.User;
 
 
 public class MsgLogin extends MsgToDB {
-    private final Integer id;
+    private final int id;
     private final String login;
     private final String password;
 
-    public MsgLogin(Address from, Address to, Integer id, String login, String password) {
+    public MsgLogin(Address from, Address to, int id, String login, String password) {
         super(from, to);
         this.id = id;
         this.login = login;

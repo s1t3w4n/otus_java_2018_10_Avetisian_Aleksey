@@ -7,9 +7,9 @@ import messageSystem.Addressee;
 public interface FrontendService extends Addressee {
     void init();
 
-    Integer handleRequest(MyWebSocket myWebSocket);
+    int registerWebSocket(MyWebSocket myWebSocket);
 
-    MyWebSocket sendResponse(Integer id);
+    void sendResponse(int id, String message);
 
     MessageSystemContext getContext();
 

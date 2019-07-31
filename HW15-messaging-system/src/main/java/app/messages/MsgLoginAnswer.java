@@ -11,10 +11,10 @@ import java.util.Objects;
 
 
 public class MsgLoginAnswer extends MsgToFrontend {
-    private final Integer id;
+    private final int id;
     private final User user;
 
-    public MsgLoginAnswer(Address from, Address to, Integer id, User user) {
+    public MsgLoginAnswer(Address from, Address to, int id, User user) {
         super(from, to);
         this.id = id;
         this.user = user;
@@ -25,9 +25,9 @@ public class MsgLoginAnswer extends MsgToFrontend {
         if (Objects.nonNull(user)) {
             final Gson gson = new Gson();
             String message = gson.toJson(user);
-            frontendService.sendResponse(id).sendResponseMessage(message);
+            frontendService.sendResponse(id, message);
         } else {
-            frontendService.sendResponse(id).sendResponseMessage("invalid");
+            frontendService.sendResponse(id,"invalid");
         }
     }
 }
