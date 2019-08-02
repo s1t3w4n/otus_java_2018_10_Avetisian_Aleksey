@@ -47,7 +47,6 @@ public final class MessageSystem {
                             message.exec(entry.getValue());
                         } catch (Exception e) {
                             logger.log(Level.INFO, "Thread failed. Finishing: " + name);
-                            continue;
                         }
                     }
                 }
