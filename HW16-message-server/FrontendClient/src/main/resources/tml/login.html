@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>login</title>
+    <style>
+        table {
+            margin: auto;
+            border-collapse: collapse;
+        }
+    </style>
+    <script>
+        var ws = new WebSocket("ws://localhost:8080/login");
+        var name = "Guest";
+
+        function postToServer() {
+
+            var data = {
+                id: document.getElementById("login-field").value,
+                password: document.getElementById("password-field").value
+            };
+            ws.send(JSON.stringify(data));
+            document.getElementById("login-field").value = "";
+            document.getElementById("password-field").value = "";
+        }
+
+        ws.onmessage = function (message) {
+            if (message.data != "invalid") {
+                var json = JSON.parse(message.data);
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', '/login', false);
+                var body = 'id=' + encodeURIComponent(json.id) +
+                    '&name=' + encodeURIComponent(json.name);
+                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                xhr.send(body);
+                location.reload();
+            } else {
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', '/login', false);
+                xhr.send(null);
+                location.reload();
+            }
+        }
+
+        function closeConnect() {
+            ws.close();
+        }
+    </script>
+</head>
+<body>
+<p align="center"><a href="main">Main</a>|<a href="admin">Admin</a>
+<table>
+    <tr>
+        <td>
+            <label for="login-field">ID</label>
+        </td>
+        <td>
+            <input type="number" name="id" id="login-field">
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <label for="password-field">PASSWORD</label>
+        </td>
+        <td>
+            <input type="password" name="password" id="password-field">
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2" align="center">
+            <input type="submit" value="LOGIN" onclick="postToServer()">
+        </td>
+    </tr>
+</table>
+</p>
+<p align="center" style="color:${color}">${status} id/password</p>
+
+
+</body>
+</html>

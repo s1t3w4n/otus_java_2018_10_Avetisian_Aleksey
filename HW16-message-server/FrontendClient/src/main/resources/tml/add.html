@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add User</title>
+    <style>
+        table {
+            margin: auto;
+            border-collapse: collapse;
+        }
+
+        .left td {
+            text-align: left;
+        }
+
+        .right td {
+            text-align: right;
+            vertical-align: center;
+        }
+
+    </style>
+    <script>
+        var ws = new WebSocket("ws://localhost:8080/add");
+
+        function postToServer() {
+            var data = {
+                name: document.getElementById("name-field").value,
+                password: document.getElementById("password-field").value,
+                age: document.getElementById("age-field").value,
+                id: document.getElementById("id-field").value,
+
+            };
+            ws.send(JSON.stringify(data));
+            document.getElementById("name-field").value = "";
+            document.getElementById("password-field").value = "";
+            document.getElementById("age-field").value = "";
+            document.getElementById("id-field").value = "";
+        }
+        function closeConnect() {
+            ws.close();
+        }
+    </script>
+</head>
+<body>
+<p align="center"><a href="main">Main</a>|<a href="admin">Admin</a>|<a href="show">SHOW</a></p>
+    <table>
+        <tr>
+            <td class="left">
+                <label for="name-field">NAME</label>
+            </td>
+            <td class="right">
+                <input type="text" name="name" id="name-field">
+            </td>
+        </tr>
+        <tr>
+            <td class="left">
+                <label for="password-field">PASSWORD</label>
+            </td>
+            <td class="right">
+                <input type="text" name="password" id="password-field">
+            </td>
+        </tr>
+        <tr>
+            <td class="left">
+                <label for="age-field">AGE</label>
+            </td>
+            <td class="right">
+                <input type="number" name="age" id="age-field">
+
+            </td>
+        </tr>
+        <tr>
+            <td class="left">
+                <label for="id-field">ID</label>
+            </td>
+            <td class="right">
+                <input type="number" name="id" id="id-field">
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" align="center">
+                <input type="submit" value="ADD/UPDATE" onclick="postToServer()">
+            </td>
+        </tr>
+    </table>
+<p align="center" style="color:${color}">${message} </p>
+
+</body>
+</html>
