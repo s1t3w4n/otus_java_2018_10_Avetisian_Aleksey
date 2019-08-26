@@ -1,7 +1,5 @@
 package service;
 
-import app.messages.Message;
-import app.Service;
 import app.frontend.websockets.MyWebSocket;
 import chanel.FrontendMessageSocketWorker;
 import messageSystem.Address;
@@ -13,7 +11,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class FrontendService implements Service {
+public class FrontendService {
 
     private static final String HOST = "localhost";
     private static final int PORT = 5050;
@@ -50,7 +48,7 @@ public class FrontendService implements Service {
         webSocketMap.get(id).sendResponseMessage(message);
     }
 
-    public void sendRequest(Message message) {
+   /* public void sendRequest(Message message) {
         frontendMessageSocketWorker.send(message);
     }
 
@@ -66,5 +64,5 @@ public class FrontendService implements Service {
             } catch (InterruptedException e) {
             }
         });
-    }
+    }*/
 }

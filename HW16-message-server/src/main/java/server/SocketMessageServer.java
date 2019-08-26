@@ -1,6 +1,5 @@
 package server;
 
-import app.messages.Message;
 import app.MessageWorker;
 import messageSystem.Address;
 import chanel.SocketMessageWorker;
@@ -42,7 +41,7 @@ public class SocketMessageServer {
 
     @SuppressWarnings("InfiniteLoopStatement")
     private void echo() {
-        while (true) {
+        /*while (true) {
             for (Map.Entry<Address, MessageWorker> entry: workersMap.entrySet()) {
                 MessageWorker worker = entry.getValue();
                 Message msg = worker.pool();
@@ -52,6 +51,6 @@ public class SocketMessageServer {
                     msg = worker.pool();
                 }
             }
-        }
+        }*/
     }
 }

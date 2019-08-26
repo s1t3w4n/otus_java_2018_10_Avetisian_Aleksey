@@ -1,7 +1,5 @@
 package service;
 
-import app.messages.Message;
-import app.Service;
 import chanel.DataBaseServerSocketWorker;
 import messageSystem.Address;
 import model.User;
@@ -11,7 +9,7 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class DataBaseService implements Service {
+public class DataBaseService {
 
     private static final String HOST = "localhost";
     private static final int PORT = 5050;
@@ -50,13 +48,12 @@ public class DataBaseService implements Service {
         userService.save(user);
     }
 
-    public void sendAnswer(Message message) {
+    /*public void sendAnswer(Message message) {
         worker.send(message);
-    }
+    }*/
 
-    @Override
     public void init() {
-        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        /*ExecutorService executorService = Executors.newSingleThreadExecutor();
         executorService.submit(() -> {
             try {
                 while (true) {
@@ -66,6 +63,6 @@ public class DataBaseService implements Service {
                 }
             } catch (InterruptedException e) {
             }
-        });
+        });*/
     }
 }

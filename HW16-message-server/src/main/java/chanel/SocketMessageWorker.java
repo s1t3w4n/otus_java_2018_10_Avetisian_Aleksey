@@ -1,6 +1,6 @@
 package chanel;
 
-import app.messages.Message;
+import app.Message;
 import app.MessageWorker;
 import com.google.gson.Gson;
 import org.json.simple.JSONObject;
