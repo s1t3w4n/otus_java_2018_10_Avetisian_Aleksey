@@ -23,11 +23,17 @@ public class JettyServerWrapper {
     private final TemplateProcessor templateProcessor;
     private final FrontendService frontendService;
 
-    public JettyServerWrapper(int frontAddress, int dbAddress) throws IOException {
+    public JettyServerWrapper() throws IOException {
+
         templateProcessor = new TemplateProcessor();
-        Address frontAddress1 = new Address(Integer.toString(frontAddress));
-        Address dbAddress1 = new Address(Integer.toString(dbAddress));
-        frontendService = new FrontendService(frontAddress1, dbAddress1);
+
+//        Address frontAddress1 = new Address(Integer.toString(frontAddress));
+//        Address dbAddress1 = new Address(Integer.toString(dbAddress));
+
+//        Address frontAddress = new Address("8080");
+//        Address dbAddress = new Address("5051");
+
+        frontendService = new FrontendService(new Address("8080"), new Address("5051"));
     }
 
     public void fillResourcesAndStart() throws Exception {
@@ -37,13 +43,11 @@ public class JettyServerWrapper {
         resourceHandler.setBaseResource(resource);
 
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
-        addFilters(context);
         addServlets(context);
+        addFilters(context);
 
         Server server = new Server(PORT);
         server.setHandler(new HandlerList(resourceHandler, context));
-
-        frontendService.init();
 
         server.start();
         server.join();

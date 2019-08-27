@@ -1,6 +1,5 @@
 package app;
 
-import app.messages.Message;
 
 import java.io.Closeable;
 

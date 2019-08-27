@@ -1,6 +1,6 @@
 package websockets;
 
-import app.messages.Message;
+import app.Message;
 import app.db.Auth;
 import app.frontend.websockets.MyWebSocket;
 import com.google.gson.Gson;

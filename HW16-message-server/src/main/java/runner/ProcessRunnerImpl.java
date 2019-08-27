@@ -36,7 +36,9 @@ public class ProcessRunnerImpl implements ProcessRunner {
     }
 
     private Process runProcess(String command) throws IOException {
-        ProcessBuilder pb = new ProcessBuilder(command.split(" "));
+        ProcessBuilder pb = new ProcessBuilder(command.split(" "))
+                .redirectOutput(ProcessBuilder.Redirect.INHERIT);
+
         pb.redirectErrorStream(true);
         Process p = pb.start();
 

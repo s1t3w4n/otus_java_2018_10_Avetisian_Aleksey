@@ -1,5 +1,6 @@
 package server;
 
+import app.Message;
 import app.MessageWorker;
 import messageSystem.Address;
 import chanel.SocketMessageWorker;
@@ -41,16 +42,17 @@ public class SocketMessageServer {
 
     @SuppressWarnings("InfiniteLoopStatement")
     private void echo() {
-        /*while (true) {
+        while (true) {
             for (Map.Entry<Address, MessageWorker> entry: workersMap.entrySet()) {
                 MessageWorker worker = entry.getValue();
                 Message msg = worker.pool();
                 while (msg != null) {
-                    System.out.println("Mirroring the message: " + msg.toString());
+                    System.out.println("Sending the message from: " + msg.getFrom() +
+                            "-> to : " + msg.getTo() + " message: "+ msg.toString());
                     workersMap.get(msg.getTo()).send(msg);
                     msg = worker.pool();
                 }
             }
-        }*/
+        }
     }
 }

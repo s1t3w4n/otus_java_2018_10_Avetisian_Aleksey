@@ -9,19 +9,13 @@ import service.UserServiceImpl;
 import java.io.IOException;
 
 public class DataBaseWrapper {
-    private final UserService userService;
-    private final DataBaseService service;
+    //private final Service service;
 
-    public DataBaseWrapper(int front, int db) throws IOException {
-        Address frontAddress = new Address(Integer.toString(front));
+    public DataBaseWrapper(int db) throws IOException {
         Address dbAddress = new Address(Integer.toString(db));
 
-        userService = addDBService();
-        service = new DataBaseService(userService, dbAddress, frontAddress);
-    }
-
-    public void start() {
-        service.init();
+        UserService userService = addDBService();
+        new DataBaseService(userService, dbAddress);
     }
 
     private UserService addDBService() {
