@@ -5,7 +5,7 @@ import org.eclipse.jetty.websocket.servlet.WebSocketServlet;
 import org.eclipse.jetty.websocket.servlet.WebSocketServletFactory;
 import resource.TemplateProcessor;
 import service.FrontendService;
-import websockets.LoginWebSocket;
+import websockets.NewLoginWebSocket;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class LoginServlet extends WebSocketServlet {
+public class NewLoginServlet extends WebSocketServlet {
     private static final String TEMPLATE = "login.html";
     private static final String STATUS = "status";
     private static final String DEFAULT_STATUS = "Type";
@@ -27,7 +27,7 @@ public class LoginServlet extends WebSocketServlet {
     private final TemplateProcessor templateProcessor;
     private final FrontendService frontendService;
 
-    public LoginServlet(TemplateProcessor templateProcessor, FrontendService frontendService) {
+    public NewLoginServlet(TemplateProcessor templateProcessor, FrontendService frontendService) {
         this.templateProcessor = templateProcessor;
         this.frontendService = frontendService;
     }
@@ -68,6 +68,6 @@ public class LoginServlet extends WebSocketServlet {
     @Override
     public void configure (WebSocketServletFactory webSocketServletFactory){
         webSocketServletFactory.setCreator((servletUpgradeRequest, servletUpgradeResponse)
-                -> new LoginWebSocket(frontendService));
+                -> new NewLoginWebSocket(frontendService));
     }
 }

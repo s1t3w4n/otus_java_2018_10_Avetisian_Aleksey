@@ -11,19 +11,19 @@ import org.eclipse.jetty.servlet.ServletHolder;
 import org.eclipse.jetty.util.resource.Resource;
 import service.FrontendService;
 import servlets.AdminServlet;
-import servlets.LoginServlet;
+import servlets.NewLoginServlet;
 import servlets.MainServlet;
 
 import java.io.IOException;
 
-public class JettyServerWrapper {
+public class NewJettyServerWrapper {
     private final static int PORT = 8080;
     private final static String PUBLIC_HTML = "/static";
 
     private final TemplateProcessor templateProcessor;
     private final FrontendService frontendService;
 
-    public JettyServerWrapper() throws IOException {
+    public NewJettyServerWrapper() throws IOException {
 
         templateProcessor = new TemplateProcessor();
 
@@ -56,7 +56,7 @@ public class JettyServerWrapper {
     private void addServlets(ServletContextHandler context) {
         context.addServlet(new ServletHolder(new AdminServlet(templateProcessor)), "/admin");
         context.addServlet(new ServletHolder(new MainServlet(templateProcessor)), "/main");
-        context.addServlet(new ServletHolder(new LoginServlet(templateProcessor, frontendService)), "/login");
+        context.addServlet(new ServletHolder(new NewLoginServlet(templateProcessor, frontendService)), "/login");
 //        context.addServlet(new ServletHolder(new ShowServlet(templateProcessor, frontendService)), "/show");
 //        context.addServlet(new ServletHolder(new AddUpdateServlet(templateProcessor, frontendService)), "/add");
     }

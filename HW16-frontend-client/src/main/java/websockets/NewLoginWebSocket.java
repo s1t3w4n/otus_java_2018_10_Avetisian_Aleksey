@@ -15,14 +15,14 @@ import service.FrontendService;
 import java.io.IOException;
 
 @WebSocket
-public class LoginWebSocket implements MyWebSocket {
+public class NewLoginWebSocket implements MyWebSocket {
 
     private Session session;
 
     private final Integer id;
     private final FrontendService frontendService;
 
-    public LoginWebSocket(FrontendService frontendService) {
+    public NewLoginWebSocket(FrontendService frontendService) {
         this.frontendService = frontendService;
         id = frontendService.registerWebSocket(this);
     }
