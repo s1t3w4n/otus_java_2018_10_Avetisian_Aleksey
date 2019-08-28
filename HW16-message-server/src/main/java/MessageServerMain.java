@@ -1,3 +1,4 @@
+import messageSystem.Address;
 import runner.ProcessRunnerImpl;
 import server.SocketMessageServer;
 
@@ -16,24 +17,27 @@ public class MessageServerMain {
         new MessageServerMain().start();
     }
 
+    @SuppressWarnings("Duplicates")
     private void start() throws Exception {
         SocketMessageServer server = new SocketMessageServer();
         System.out.println("Server started");
 
         ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
-        startClient(executorService, FRONTEND_START_COMMAND, server);
-        startClient(executorService, DATABASE_START_COMMAND, server);
-
+        server.registerAddress(new Address("8080"));
+        startClient(executorService, FRONTEND_START_COMMAND);
+        server.registerAddress(new Address("5051"));
+        startClient(executorService, DATABASE_START_COMMAND);
 
         server.start();
+
 
         executorService.shutdown();
     }
 
-    private void startClient(ScheduledExecutorService executorService, String command, SocketMessageServer server) {
+    private void startClient(ScheduledExecutorService executorService, String command) {
         executorService.schedule(() -> {
             try {
-                new ProcessRunnerImpl(server).start(command);
+                new ProcessRunnerImpl().start(command);
             } catch (IOException ignored) {
 
             }

@@ -17,6 +17,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
 
+@SuppressWarnings("ALL")
 public class SocketMessageWorker implements MessageWorker {
 
     private static final int WORKERS_COUNT = 2;

@@ -5,7 +5,6 @@ import app.MessageWorker;
 import messageSystem.Address;
 import chanel.SocketMessageWorker;
 
-import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Map;
@@ -17,38 +16,45 @@ public class SocketMessageServer {
     private static final int PORT = 5050;
 
     private final ExecutorService executor;
-    private final ServerSocket serverSocket;
+    private final BlockingQueue<Address> addresses;
     private final Map<Address, MessageWorker> workersMap;
 
-    public SocketMessageServer() throws IOException {
+    public SocketMessageServer() {
         executor = Executors.newFixedThreadPool(THREADS_NUMBER);
+        addresses = new LinkedBlockingQueue<>();
         workersMap = new ConcurrentHashMap<>();
-        serverSocket = new ServerSocket(PORT);
     }
 
-    public void start() {
+    public void start() throws Exception {
         executor.submit(this::echo);
 
-    }
-
-    public void registerClientSocket(Address address) throws IOException {
-        if (!executor.isShutdown()) {
-            Socket socket = serverSocket.accept();
-            SocketMessageWorker worker = new SocketMessageWorker(socket);
-            workersMap.put(address, worker);
-            System.out.println("Worker started" + address.getId());
+        try (ServerSocket serverSocket = new ServerSocket(PORT)) {
+            //logger.info("Server started on port: " + serverSocket.getLocalPort());
+            while (!executor.isShutdown()) {
+                if (!addresses.isEmpty()) {
+                    Socket socket = serverSocket.accept(); //blocks
+                    SocketMessageWorker worker = new SocketMessageWorker(socket);
+                    workersMap.put(addresses.take(), worker);
+                }
+            }
         }
     }
+
+    public void registerAddress(Address address) {
+        addresses.add(address);
+    }
+
+
 
     @SuppressWarnings("InfiniteLoopStatement")
     private void echo() {
         while (true) {
-            for (Map.Entry<Address, MessageWorker> entry: workersMap.entrySet()) {
+            for (Map.Entry<Address, MessageWorker> entry : workersMap.entrySet()) {
                 MessageWorker worker = entry.getValue();
                 Message msg = worker.pool();
                 while (msg != null) {
                     System.out.println("Sending the message from: " + msg.getFrom() +
-                            "-> to : " + msg.getTo() + " message: "+ msg.toString());
+                            "-> to : " + msg.getTo() + " message: " + msg.toString());
                     workersMap.get(msg.getTo()).send(msg);
                     msg = worker.pool();
                 }

@@ -12,11 +12,9 @@ import java.io.InputStreamReader;
 public class ProcessRunnerImpl implements ProcessRunner {
 
     private final StringBuffer out = new StringBuffer();
-    private final SocketMessageServer server;
     private Process process;
 
-    public ProcessRunnerImpl(SocketMessageServer server) throws IOException {
-        this.server = server;
+    public ProcessRunnerImpl() {
     }
 
 
@@ -43,7 +41,6 @@ public class ProcessRunnerImpl implements ProcessRunner {
         Process p = pb.start();
 
         StreamListener output = new StreamListener(p.getInputStream(), "OUTPUT");
-        server.registerClientSocket(new Address(Integer.valueOf(command.split(" ")[0]).toString()));
         output.start();
 
         return p;
