@@ -10,10 +10,10 @@ public abstract class MessageToDB extends Message {
 
     @Override
     public void exec(Service service) {
-        if (service instanceof DBService) {
-            exec((DBService) service);
+        if (service instanceof ServiceDB) {
+            exec((ServiceDB) service);
         }
     }
 
-    public abstract void exec(DBService dbService);
+    public abstract void exec(ServiceDB serviceDB);
 }

@@ -1,6 +1,6 @@
 package service;
 
-import app.DBService;
+import app.ServiceDB;
 import app.Message;
 import chanel.DataBaseServerSocketWorker;
 import chanel.SocketMessageWorker;
@@ -9,8 +9,9 @@ import model.User;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 
-public class DataBaseService implements DBService {
+public class DataBaseService implements ServiceDB {
 
     private static final String HOST = "localhost";
     private static final int PORT = 5050;
@@ -35,7 +36,12 @@ public class DataBaseService implements DBService {
 
     @Override
     public User login(String id, String password) {
-        return userService.load(Long.parseLong(id, 10));
+        User user = userService.load(Long.parseLong(id, 10));
+        if (Objects.requireNonNull(user).getPassword().equals(password)) {
+            return user;
+        } else {
+            return null;
+        }
     }
 
     @Override

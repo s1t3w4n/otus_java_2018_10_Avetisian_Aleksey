@@ -9,10 +9,8 @@ import org.eclipse.jetty.servlet.FilterHolder;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.eclipse.jetty.util.resource.Resource;
-import service.FrontendService;
-import servlets.AdminServlet;
-import servlets.NewLoginServlet;
-import servlets.MainServlet;
+import service.FrontendServiceFE;
+import servlets.*;
 
 import java.io.IOException;
 
@@ -21,19 +19,16 @@ public class NewJettyServerWrapper {
     private final static String PUBLIC_HTML = "/static";
 
     private final TemplateProcessor templateProcessor;
-    private final FrontendService frontendService;
+    private final FrontendServiceFE frontendService;
 
-    public NewJettyServerWrapper() throws IOException {
+    public NewJettyServerWrapper(int frontAddress, int dbAddress) throws IOException {
 
         templateProcessor = new TemplateProcessor();
 
-//        Address frontAddress1 = new Address(Integer.toString(frontAddress));
-//        Address dbAddress1 = new Address(Integer.toString(dbAddress));
+        Address frontAddress1 = new Address(Integer.toString(frontAddress));
+        Address dbAddress1 = new Address(Integer.toString(dbAddress));
 
-//        Address frontAddress = new Address("8080");
-//        Address dbAddress = new Address("5051");
-
-        frontendService = new FrontendService(new Address("8080"), new Address("5051"));
+        frontendService = new FrontendServiceFE(frontAddress1, dbAddress1);
     }
 
     public void fillResourcesAndStart() throws Exception {
@@ -50,6 +45,7 @@ public class NewJettyServerWrapper {
         server.setHandler(new HandlerList(resourceHandler, context));
 
         server.start();
+        System.out.println("Frontend client started");
         server.join();
     }
 
@@ -57,8 +53,8 @@ public class NewJettyServerWrapper {
         context.addServlet(new ServletHolder(new AdminServlet(templateProcessor)), "/admin");
         context.addServlet(new ServletHolder(new MainServlet(templateProcessor)), "/main");
         context.addServlet(new ServletHolder(new NewLoginServlet(templateProcessor, frontendService)), "/login");
-//        context.addServlet(new ServletHolder(new ShowServlet(templateProcessor, frontendService)), "/show");
-//        context.addServlet(new ServletHolder(new AddUpdateServlet(templateProcessor, frontendService)), "/add");
+        context.addServlet(new ServletHolder(new NewShowServlet(templateProcessor, frontendService)), "/show");
+        context.addServlet(new ServletHolder(new NewAddUpdateServlet(templateProcessor, frontendService)), "/add");
     }
 
     private void addFilters(ServletContextHandler context) {

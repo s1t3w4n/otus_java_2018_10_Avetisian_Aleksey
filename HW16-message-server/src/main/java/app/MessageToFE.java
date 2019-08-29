@@ -9,10 +9,10 @@ public abstract class MessageToFE extends Message {
 
     @Override
     public void exec(Service service) {
-        if (service instanceof FEService) {
-            exec((FEService) service);
+        if (service instanceof ServiceFE) {
+            exec((ServiceFE) service);
         }
     }
 
-    public abstract void exec(FEService FEService);
+    public abstract void exec(ServiceFE serviceFE);
 }

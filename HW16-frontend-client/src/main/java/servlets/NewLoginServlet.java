@@ -4,7 +4,7 @@ import org.eclipse.jetty.http.HttpStatus;
 import org.eclipse.jetty.websocket.servlet.WebSocketServlet;
 import org.eclipse.jetty.websocket.servlet.WebSocketServletFactory;
 import resource.TemplateProcessor;
-import service.FrontendService;
+import service.FrontendServiceFE;
 import websockets.NewLoginWebSocket;
 
 import javax.servlet.http.HttpServletRequest;
@@ -25,9 +25,9 @@ public class NewLoginServlet extends WebSocketServlet {
     private String color = DEFAULT_COLOR;
 
     private final TemplateProcessor templateProcessor;
-    private final FrontendService frontendService;
+    private final FrontendServiceFE frontendService;
 
-    public NewLoginServlet(TemplateProcessor templateProcessor, FrontendService frontendService) {
+    public NewLoginServlet(TemplateProcessor templateProcessor, FrontendServiceFE frontendService) {
         this.templateProcessor = templateProcessor;
         this.frontendService = frontendService;
     }

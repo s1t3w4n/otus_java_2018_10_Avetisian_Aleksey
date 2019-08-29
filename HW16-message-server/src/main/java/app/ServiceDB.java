@@ -4,7 +4,7 @@ import model.User;
 
 import java.util.List;
 
-public interface DBService extends Service {
+public interface ServiceDB extends Service {
 
     User login(String id, String password);
     List<User> showAll();

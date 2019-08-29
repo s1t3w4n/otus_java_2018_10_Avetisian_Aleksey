@@ -1,6 +1,6 @@
 package service;
 
-import app.FEService;
+import app.ServiceFE;
 import app.Message;
 import app.frontend.websockets.MyWebSocket;
 import chanel.FrontendMessageSocketWorker;
@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class FrontendService implements FEService {
+public class FrontendServiceFE implements ServiceFE {
 
     private static final String HOST = "localhost";
     private static final int PORT = 5050;
@@ -25,7 +25,7 @@ public class FrontendService implements FEService {
     private static final AtomicInteger ID_COUNTER = new AtomicInteger();
     private final Map<Integer, MyWebSocket> webSocketMap = new HashMap<>();
 
-    public FrontendService(Address address, Address DBAddress) throws IOException {
+    public FrontendServiceFE(Address address, Address DBAddress) throws IOException {
         worker = new FrontendMessageSocketWorker(HOST, PORT);
         this.address = address;
         this.DBAddress = DBAddress;

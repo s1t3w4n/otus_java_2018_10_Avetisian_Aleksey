@@ -8,6 +8,7 @@ import model.User;
 import service.UserService;
 
 import java.util.List;
+import java.util.Objects;
 
 public class DBServiceImpl implements DBService {
     private final Address address;
@@ -27,7 +28,12 @@ public class DBServiceImpl implements DBService {
 
     @Override
     public User login(String id, String password) {
-        return service.load(Long.parseLong(id, 10));
+        User user = service.load(Long.parseLong(id, 10));
+        if (Objects.requireNonNull(user).getPassword().equals(password)) {
+            return user;
+        } else {
+            return null;
+        }
     }
 
     @Override

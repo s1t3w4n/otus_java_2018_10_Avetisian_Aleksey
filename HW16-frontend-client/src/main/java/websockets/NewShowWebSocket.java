@@ -1,10 +1,8 @@
 package websockets;
 
 import app.Message;
-import app.db.Auth;
 import app.frontend.websockets.MyWebSocket;
-import com.google.gson.Gson;
-import messages.LoginMessage;
+import messages.ShowMessage;
 import org.eclipse.jetty.websocket.api.Session;
 import org.eclipse.jetty.websocket.api.annotations.OnWebSocketClose;
 import org.eclipse.jetty.websocket.api.annotations.OnWebSocketConnect;
@@ -15,28 +13,24 @@ import service.FrontendServiceFE;
 import java.io.IOException;
 
 @WebSocket
-public class NewLoginWebSocket implements MyWebSocket {
-
+public class NewShowWebSocket implements MyWebSocket {
     private Session session;
 
     private final int id;
     private final FrontendServiceFE frontendService;
 
-    public NewLoginWebSocket(FrontendServiceFE frontendService) {
+    public NewShowWebSocket(   FrontendServiceFE frontendService) {
         this.frontendService = frontendService;
         id = frontendService.registerWebSocket(this);
     }
 
     @OnWebSocketMessage
     public void onMessage(String message) {
-        Gson gson = new Gson();
-        Auth auth = gson.fromJson(message, Auth.class);
-        Message toDBMessage = new LoginMessage(
+        System.out.println("Show " + message);
+        Message toDBMessage = new ShowMessage(
                 frontendService.getAddress(),
                 frontendService.getDBAddress(),
-                id,
-                auth.getId(),
-                auth.getPassword());
+                id);
         frontendService.sendRequest(toDBMessage);
     }
 

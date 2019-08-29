@@ -3,7 +3,7 @@ package app;
 import app.frontend.websockets.MyWebSocket;
 import messageSystem.Address;
 
-public interface FEService extends Service {
+public interface ServiceFE extends Service {
     Address getDBAddress();
 
     int registerWebSocket(MyWebSocket webSocket);

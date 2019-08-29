@@ -1,6 +1,6 @@
 package messages;
 
-import app.FEService;
+import app.ServiceFE;
 import app.MessageToFE;
 import com.google.gson.Gson;
 import messageSystem.Address;
@@ -12,20 +12,20 @@ public class AnswerLoginMessage extends MessageToFE {
     private final int id;
     private final User user;
 
-    protected AnswerLoginMessage(Address from, Address to, int id, User user) {
+    public AnswerLoginMessage(Address from, Address to, int id, User user) {
         super(AnswerLoginMessage.class, from, to);
         this.id = id;
         this.user = user;
     }
 
     @Override
-    public void exec(FEService FEService) {
+    public void exec(ServiceFE frontendService) {
         if (Objects.nonNull(user)) {
             final Gson gson = new Gson();
             String message = gson.toJson(user);
-            FEService.sendResponse(id, message);
+            frontendService.sendResponse(id, message);
         } else {
-            FEService.sendResponse(id,"invalid");
+            frontendService.sendResponse(id,"invalid");
         }
     }
 }
