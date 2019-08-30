@@ -9,7 +9,6 @@ import service.UserServiceImpl;
 import java.io.IOException;
 
 public class DataBaseWrapper {
-    //private final Service service;
 
     public DataBaseWrapper(int db) throws IOException {
         Address dbAddress = new Address(Integer.toString(db));

@@ -15,7 +15,7 @@ import servlets.*;
 import java.io.IOException;
 
 public class NewJettyServerWrapper {
-    private final static int PORT = 8080;
+    private final int PORT;
     private final static String PUBLIC_HTML = "/static";
 
     private final TemplateProcessor templateProcessor;
@@ -25,6 +25,7 @@ public class NewJettyServerWrapper {
 
         templateProcessor = new TemplateProcessor();
 
+        PORT = frontAddress;
         Address frontAddress1 = new Address(Integer.toString(frontAddress));
         Address dbAddress1 = new Address(Integer.toString(dbAddress));
 
